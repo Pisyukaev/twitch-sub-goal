@@ -1,0 +1,18 @@
+{
+  "name": "Customized twitch sub goal",
+  "manifest_version": 3,
+  "version": "0.1.0",
+  "content_scripts": [
+    {
+      "matches": ["https://dashboard.twitch.tv/u/*"],
+      "js": ["content.js", "arrive.min.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "storage", "scripting", "activeTab"],
+  "host_permissions": ["https://dashboard.twitch.tv/u/*"],
+  "icons": { "16": "stars.png", "48": "stars.png", "128": "stars.png" }
+}
