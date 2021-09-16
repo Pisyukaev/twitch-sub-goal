@@ -1,0 +1,26 @@
+.settings-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-option {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.twitch-input {
+  width: 20% !important;
+  border-radius: 0.4rem;
+}
+
+.image-input {
+  width: 50% !important;
+  text-overflow: ellipsis;
+}
+
+.clear-settings-btn {
+  height: 60px !important;
+  width: 20% !important;
+}
