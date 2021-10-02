@@ -17,23 +17,23 @@ class Css {
 }
 
 const initValue = {
-  ['.Layout-sc-nxg1ff-0.kLKpNe.goal_widget']: {
+  ['.goal_widget']: {
     ['border-color']: '#000000',
     ['background-color']: '#ffffff',
     ['border-width']: '5px',
     ['border-radius']: '30px',
   },
-  ['.Layout-sc-nxg1ff-0.DxHxY.goal_widget__progress_bar']: {
+  ['.goal_widget__progress_bar']: {
     ['background-color']: '#bf94ff',
   },
   ['.goal_widget__image.tw-image']: {
     content:
       'https://static.twitchcdn.net/assets/subscribe-2d3225207e704bd2aa2d.svg',
   },
-  ['.Layout-sc-nxg1ff-0.dgBHOj.goal_widget__body .Layout-sc-nxg1ff-0.xAfNg']: {
+  ['.goal_widget__metadata> *:first-child']: {
     color: '#0e0e10',
   },
-  ['.Layout-sc-nxg1ff-0.jqfenf.goal_widget__contributions']: {
+  ['.goal_widget__metadata> *:last-child']: {
     color: '#53535f',
   },
 };

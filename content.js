@@ -24,12 +24,11 @@ const TEXTAREA_CLASS =
   'ScInputBase-sc-1wz0osy-0 ScTextArea-sc-1ywwys8-0 kYJGMC InjectLayout-sc-588ddc-0 iZLAMf tw-textarea tw-textarea--no-resize';
 const BTN_CLASS =
   'ScCoreButton-sc-1qn4ixc-0 ScCoreButtonDestructive-sc-1qn4ixc-4 iIWcIf clear-settings-btn';
-const WIDGET = '.Layout-sc-nxg1ff-0.kLKpNe.goal_widget';
-const PROGRESS_BAR = '.Layout-sc-nxg1ff-0.DxHxY.goal_widget__progress_bar';
+const WIDGET = '.goal_widget';
+const PROGRESS_BAR = '.goal_widget__progress_bar';
 const IMAGE = '.goal_widget__image.tw-image';
-const LEFT_TEXT =
-  '.Layout-sc-nxg1ff-0.dgBHOj.goal_widget__body .Layout-sc-nxg1ff-0.xAfNg';
-const RIGHT_TEXT = '.Layout-sc-nxg1ff-0.jqfenf.goal_widget__contributions';
+const LEFT_TEXT = '.goal_widget__metadata> *:first-child';
+const RIGHT_TEXT = '.goal_widget__metadata> *:last-child';
 
 let isMounted = false;
 
