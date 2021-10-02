@@ -32,6 +32,32 @@ const RIGHT_TEXT = '.goal_widget__metadata> *:last-child';
 
 let isMounted = false;
 
+const applyProp = (className, prop, value) => {
+  const element = document.querySelector(className);
+
+  if (element === null) {
+    return;
+  }
+
+  element.style[prop] = value;
+};
+
+const applyCSS = (objOfCss) => {
+  for (let className in objOfCss) {
+    const element = document.querySelector(className);
+
+    if (element === null) {
+      return;
+    }
+
+    const styles = objOfCss[className];
+
+    for (let prop in styles) {
+      applyProp(className, prop, styles[prop]);
+    }
+  }
+};
+
 const createOption = ({
   tagName,
   name,
@@ -74,6 +100,12 @@ const createOption = ({
   option.appendChild(tag);
 
   return option;
+};
+
+const initSettings = () => {
+  chrome.storage.sync.get(null, (settings) => {
+    applyCSS(settings);
+  });
 };
 
 const updateSettings = () => {
@@ -136,13 +168,22 @@ const handleWidgetMounted = () => {
         const isNumber = value == Number(value);
         const isImg = className === IMAGE;
         const prevOptions = item[className];
+
+        const normValue = isNumber
+          ? `${value}px`
+          : isImg
+          ? `url(${value})`
+          : value;
+
         const newOptions = {
           ...item,
           [className]: {
             ...prevOptions,
-            [name]: isNumber ? `${value}px` : isImg ? `url(${value})` : value,
+            [name]: normValue,
           },
         };
+
+        applyProp(className, name, normValue);
 
         const cssStyles = Css.of(newOptions);
         const textAreaCSS = document.getElementById('textarea-sub-goal');
@@ -154,8 +195,6 @@ const handleWidgetMounted = () => {
             `Set option ${name}: ${value} for classname ${className}`
           );
         });
-
-        chrome.runtime.sendMessage({ message: 'save', settings: newOptions });
       });
     };
 
@@ -254,6 +293,7 @@ const handleWidgetMounted = () => {
 
   dialog.appendChild(settingsContainer);
 
+  initSettings();
   updateSettings();
 };
 
@@ -264,6 +304,7 @@ const handleListener = (request) => {
   }
 
   if (request.message === 'update') {
+    initSettings();
     updateSettings();
   }
 
