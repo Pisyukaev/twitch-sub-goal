@@ -18,12 +18,12 @@ class Css {
 
 // CONSTANTS
 const INPUT_CLASS =
-  'ScInputBase-sc-1wz0osy-0 ScInput-sc-m6vr9t-0 XFvNK InjectLayout-sc-588ddc-0 tw-input twitch-input';
+  'ScInputBase-sc-1wz0osy-0 ScInput-sc-m6vr9t-0 hZWbpp gGjGiv InjectLayout-sc-588ddc-0 bCTkss tw-input twitch-input';
 const LABEL_CLASS = 'ScFormLabel-sc-1oiqww5-0 joDIoX tw-form-label label';
 const TEXTAREA_CLASS =
-  'ScInputBase-sc-1wz0osy-0 ScTextArea-sc-1ywwys8-0 kYJGMC InjectLayout-sc-588ddc-0 iZLAMf tw-textarea tw-textarea--no-resize';
+  'class="ScInputBase-sc-1wz0osy-0 ScTextArea-sc-1ywwys8-0 hZWbpp kyAcgE InjectLayout-sc-588ddc-0 fwbcLg tw-textarea tw-textarea--no-resize"';
 const BTN_CLASS =
-  'ScCoreButton-sc-1qn4ixc-0 ScCoreButtonDestructive-sc-1qn4ixc-4 iIWcIf clear-settings-btn';
+  'ScCoreButton-sc-1qn4ixc-0 ScCoreButtonDestructive-sc-1qn4ixc-4 bhFESG QhoTS clear-settings-btn';
 const WIDGET = '.goal_widget';
 const PROGRESS_BAR = '.goal_widget__progress_bar';
 const IMAGE = '.goal_widget__image.tw-image';

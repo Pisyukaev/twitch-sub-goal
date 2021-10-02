@@ -13,6 +13,7 @@
 .twitch-input {
   width: 20% !important;
   border-radius: 0.4rem;
+  text-align: center;
 }
 
 .image-input {
@@ -21,6 +22,5 @@
 }
 
 .clear-settings-btn {
-  height: 60px !important;
   width: 20% !important;
 }
