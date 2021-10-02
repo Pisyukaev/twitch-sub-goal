@@ -116,9 +116,7 @@ const updateSettings = () => {
 };
 
 const handleWidgetMounted = () => {
-  const dialog = document.querySelector(
-    'div.ScTransitionBase-sc-eg1bd7-0.cymLZF.tw-transition > div'
-  );
+  const dialog = document.querySelector('.tw-modal');
 
   const settingsContainer = document.createElement('div');
   settingsContainer.className = 'Layout-sc-nxg1ff-0 gLWtoa settings-container';
@@ -262,10 +260,7 @@ const handleWidgetMounted = () => {
 const handleListener = (request) => {
   if (request.message === 'listen' && !isMounted) {
     isMounted = true;
-    document.arrive(
-      '.Layout-sc-nxg1ff-0.kLKpNe.goal_widget',
-      handleWidgetMounted
-    );
+    document.arrive('.goal_widget', handleWidgetMounted);
   }
 
   if (request.message === 'update') {
