@@ -12,7 +12,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["tabs", "storage", "scripting", "activeTab"],
+  "permissions": ["tabs", "storage", "activeTab"],
   "host_permissions": ["https://dashboard.twitch.tv/u/*"],
   "icons": { "16": "stars.png", "48": "stars.png", "128": "stars.png" }
 }
