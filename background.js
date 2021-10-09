@@ -1,11 +1,11 @@
 const initValue = {
-  ['.goal_widget']: {
+  ['div.goal_widget']: {
     ['border-color']: '#000000',
     ['background-color']: '#ffffff',
     ['border-width']: '5px',
     ['border-radius']: '30px',
   },
-  ['.goal_widget__progress_bar']: {
+  ['div.goal_widget__progress_bar']: {
     ['background-color']: '#bf94ff',
   },
   ['.goal_widget__image.tw-image']: {
@@ -19,6 +19,8 @@ const initValue = {
     color: '#53535f',
   },
 };
+
+chrome.storage.sync.clear();
 
 const setDefaultSettings = () => {
   chrome.storage.sync.set(initValue, () => console.log('Init settings'));
