@@ -32,6 +32,15 @@ const RIGHT_TEXT = '.goal_widget__metadata> *:last-child';
 
 let isMounted = false;
 
+const normalValue = (className, value) => {
+  const isNumber = value == Number(value);
+  const isImg = className === IMAGE;
+
+  const normValue = isNumber ? `${value}px` : isImg ? `url(${value})` : value;
+
+  return normValue;
+};
+
 const applyProp = (className, prop, value) => {
   const element = document.querySelector(className);
 
@@ -161,19 +170,20 @@ const handleWidgetMounted = () => {
     className: TEXTAREA_CLASS,
   });
 
+  handleChangeOptions =
+    (className) =>
+    ({ target: { value, name } }) => {
+      const container = document.querySelector(className);
+      const normValue = normalValue(className, value);
+      container.style[name] = normValue;
+    };
+
   const handleSaveOption =
     (className) =>
     ({ target: { value, name } }) => {
       chrome.storage.sync.get(null, (item) => {
-        const isNumber = value == Number(value);
-        const isImg = className === IMAGE;
+        const normValue = normalValue(className, value);
         const prevOptions = item[className];
-
-        const normValue = isNumber
-          ? `${value}px`
-          : isImg
-          ? `url(${value})`
-          : value;
 
         const newOptions = {
           ...item,
@@ -205,6 +215,7 @@ const handleWidgetMounted = () => {
     tagType: 'color',
     labelText: 'Border color',
     onChange: handleSaveOption(WIDGET),
+    onInput: handleChangeOptions(WIDGET),
   });
 
   const borderWidth = createOption({
@@ -215,6 +226,7 @@ const handleWidgetMounted = () => {
     labelText: 'Border width',
     className: INPUT_CLASS,
     onChange: handleSaveOption(WIDGET),
+    onInput: handleChangeOptions(WIDGET),
   });
 
   const borderRadius = createOption({
@@ -225,6 +237,7 @@ const handleWidgetMounted = () => {
     labelText: 'Border radius',
     className: INPUT_CLASS,
     onChange: handleSaveOption(WIDGET),
+    onInput: handleChangeOptions(WIDGET),
   });
 
   const containerBGColor = createOption({
@@ -234,6 +247,7 @@ const handleWidgetMounted = () => {
     tagType: 'color',
     labelText: 'Progress bar background color',
     onChange: handleSaveOption(WIDGET),
+    onInput: handleChangeOptions(WIDGET),
   });
 
   const progressBarColor = createOption({
@@ -243,6 +257,7 @@ const handleWidgetMounted = () => {
     tagType: 'color',
     labelText: 'Progress bar color',
     onChange: handleSaveOption(PROGRESS_BAR),
+    onInput: handleChangeOptions(PROGRESS_BAR),
   });
 
   const image = createOption({
@@ -253,6 +268,7 @@ const handleWidgetMounted = () => {
     labelText: 'Image',
     className: `${INPUT_CLASS} image-input`,
     onChange: handleSaveOption(IMAGE),
+    onInput: handleChangeOptions(IMAGE),
   });
 
   const leftTextColor = createOption({
@@ -262,6 +278,7 @@ const handleWidgetMounted = () => {
     tagType: 'color',
     labelText: 'Left text',
     onChange: handleSaveOption(LEFT_TEXT),
+    onInput: handleChangeOptions(LEFT_TEXT),
   });
 
   const rightTextColor = createOption({
@@ -271,6 +288,7 @@ const handleWidgetMounted = () => {
     tagType: 'color',
     labelText: 'Right text',
     onChange: handleSaveOption(RIGHT_TEXT),
+    onInput: handleChangeOptions(RIGHT_TEXT),
   });
 
   const clearButton = document.createElement('button');
