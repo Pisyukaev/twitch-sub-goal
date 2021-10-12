@@ -20,8 +20,6 @@ const initValue = {
   },
 };
 
-chrome.storage.sync.clear();
-
 const setDefaultSettings = () => {
   chrome.storage.sync.set(initValue, () => console.log('Init settings'));
 };
