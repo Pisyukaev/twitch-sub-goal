@@ -6,6 +6,7 @@ specifiers:
   '@mantine/core': 5.10.1
   '@mantine/hooks': 5.10.1
   '@plasmohq/prettier-plugin-sort-imports': 3.6.1
+  '@plasmohq/storage': ^1.0.0
   '@types/chrome': 0.0.209
   '@types/node': 18.11.18
   '@types/react': 18.0.27
@@ -20,6 +21,7 @@ dependencies:
   '@emotion/react': 11.10.5_yxdp3dl3eazy3vwpbmv4fq727a
   '@mantine/core': 5.10.1_pl7c6tg3txk3em5brrn6d2cdkm
   '@mantine/hooks': 5.10.1_react@18.2.0
+  '@plasmohq/storage': 1.0.0_react@18.2.0
   plasmo: 0.63.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -2090,6 +2092,18 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@plasmohq/storage/1.0.0_react@18.2.0:
+    resolution: {integrity: sha512-s7CuOSXmaXq0P23szKJpCYr/xfvjhXi0OtVVymACPSdGJCHrAGQquSLIMLbmdUuTAdcimJogYcr7MdMUMbW/8g==}
+    peerDependencies:
+      react: ^16.8.6 || ^17 || ^18
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      webextension-polyfill: 0.10.0
+    dev: false
 
   /@pnpm/network.ca-file/1.0.2:
     resolution: {integrity: sha512-YcPQ8a0jwYU9bTdJDpXjMi7Brhkr1mXsXrUJvjqM2mQDgkRiz8jFaQGOdaLxgjtUfQgZhKy/O3cG/YwmgKaxLA==}
@@ -5458,6 +5472,10 @@ packages:
 
   /weak-lru-cache/1.2.2:
     resolution: {integrity: sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==}
+    dev: false
+
+  /webextension-polyfill/0.10.0:
+    resolution: {integrity: sha512-c5s35LgVa5tFaHhrZDnr3FpQpjj1BB+RXhLTYUxGqBVN460HkbM8TBtEqdXWbpTKfzwCcjAZVF7zXCYSKtcp9g==}
     dev: false
 
   /webidl-conversions/4.0.2:
