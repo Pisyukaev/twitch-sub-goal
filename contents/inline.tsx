@@ -1,6 +1,5 @@
 import {
   Button,
-  ColorPicker,
   ColorSwatch,
   CopyButton,
   Group,
@@ -23,13 +22,11 @@ import {
   RIGHT_TEXT
 } from "~app/constants"
 import { useStyles } from "~app/hooks"
+import type { SelectorProps } from "~app/types"
 import { ThemeProvider } from "~theme"
 
 export const config: PlasmoContentScript = {
-  matches: [
-    "https://dashboard.twitch.tv/u/*/stream-manager"
-    // "https://example.com/"
-  ]
+  matches: ["https://dashboard.twitch.tv/u/*/stream-manager"]
 }
 
 const styleElement = document.createElement("style")
@@ -74,7 +71,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 
 function PlasmoInline() {
   const styles = useStyles()
-  const data = useMemo(
+  const selectorsData = useMemo<SelectorProps[]>(
     () => [
       {
         value: GOAL_WIDGET,
@@ -104,26 +101,25 @@ function PlasmoInline() {
     [styles]
   )
   const [imgSrc, setImgSrc] = useState(styles[GW_IMAGE])
-  const [currItem, setCurrItem] = useState(data[0])
+  const [selectedId, setSelectedId] = useState(0)
 
-  const selectChange = (value: string) =>
-    setCurrItem(data.find((item) => item.value === value))
+  const selectChange = (value: string) => {
+    const findSelectedId = selectorsData.findIndex(
+      (item) => item.value === value
+    )
+    setSelectedId(findSelectedId)
+  }
 
   return (
     <ThemeProvider emotionCache={styleCache}>
-      <Stack miw={240} p="lg">
+      <Stack align="stretch" w="100%" p="lg">
         <Select
-          data={data}
+          data={selectorsData}
           itemComponent={SelectItem}
           onChange={selectChange}
-          value={currItem.value}
+          value={selectorsData[selectedId].value}
         />
-        <WidgetStyles
-          selector={currItem.value}
-          property={currItem.property}
-          color={currItem.color}
-        />
-
+        <WidgetStyles selectedStyles={selectorsData[selectedId]} />
         <Input.Wrapper label="Image link">
           <Input value={imgSrc} onChange={(e) => setImgSrc(e.target.value)} />
         </Input.Wrapper>

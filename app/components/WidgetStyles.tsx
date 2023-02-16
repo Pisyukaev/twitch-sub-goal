@@ -4,17 +4,17 @@ import React, { useEffect } from "react"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { useUpdateStyles } from "~app/hooks"
+import type { SelectorProps } from "~app/types"
 
 interface Props {
-  selector: string
-  property: "color" | "backgroundColor"
-  color: string
+  selectedStyles: SelectorProps
 }
 
-const WidgetStyles = ({ selector, property, color }: Props) => {
-  const [styles, _, { setRenderValue, setStoreValue }] = useStorage(selector)
+const WidgetStyles = ({ selectedStyles }: Props) => {
+  const { value, color, label, property } = selectedStyles
+  const [styles, _, { setRenderValue, setStoreValue }] = useStorage(value)
 
-  const updStyle = useUpdateStyles(selector)
+  const updStyle = useUpdateStyles(value)
 
   const handleChange = (color: string) => {
     setRenderValue({ ...styles, [property]: color })
@@ -30,6 +30,7 @@ const WidgetStyles = ({ selector, property, color }: Props) => {
   return (
     <ColorPicker
       format="rgba"
+      hueLabel={label}
       value={styles?.[property] || color}
       onChange={handleChange}
       onChangeEnd={handleChangeEnd}
