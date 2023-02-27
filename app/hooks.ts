@@ -1,3 +1,5 @@
+import { useRef } from "react"
+
 import { useStorage } from "@plasmohq/storage/hook"
 
 import {
@@ -8,56 +10,90 @@ import {
   RIGHT_TEXT
 } from "./constants"
 
-export const useDefaultStyles = () => {
-  const widgetBody = document.querySelector<HTMLDivElement>(GOAL_WIDGET)
-  const image = document.querySelector<HTMLImageElement>(GW_IMAGE)
-  const leftText = document.querySelector<HTMLDivElement>(LEFT_TEXT)
-  const rightText = document.querySelector<HTMLDivElement>(RIGHT_TEXT)
-  const progressBar = document.querySelector<HTMLDivElement>(GW_PROGRESS_BAR)
+export const useElements = () => {
+  const widgetBody = useRef(document.querySelector<HTMLDivElement>(GOAL_WIDGET))
+  const image = useRef(document.querySelector<HTMLImageElement>(GW_IMAGE))
+  const leftText = useRef(document.querySelector<HTMLDivElement>(LEFT_TEXT))
+  const rightText = useRef(document.querySelector<HTMLDivElement>(RIGHT_TEXT))
+  const progressBar = useRef(
+    document.querySelector<HTMLDivElement>(GW_PROGRESS_BAR)
+  )
 
   return {
-    [GOAL_WIDGET]: { backgroundColor: widgetBody.style.backgroundColor },
-    [GW_IMAGE]: image.src,
-    [GW_PROGRESS_BAR]: { backgroundColor: progressBar.style.backgroundColor },
+    widgetBody: widgetBody.current,
+    image: image.current,
+    leftText: leftText.current,
+    rightText: rightText.current,
+    progressBar: progressBar.current
+  }
+}
+
+export const useDefaultStyles = () => {
+  const { leftText, progressBar, rightText, widgetBody, image } = useElements()
+
+  return {
+    [GOAL_WIDGET]: { "background-color": widgetBody.style.backgroundColor },
+    [GW_PROGRESS_BAR]: {
+      "background-color": progressBar.style.backgroundColor
+    },
     [LEFT_TEXT]: { color: leftText.style.color },
-    [RIGHT_TEXT]: { color: rightText.style.color }
+    [RIGHT_TEXT]: { color: rightText.style.color },
+    [GW_IMAGE]: {
+      "background-image": `url(${image.src})`,
+      "background-size": "64px",
+      width: "0px",
+      height: "0px",
+      padding: "64px 64px 0px 0px"
+    }
   }
 }
 
 export const useStyles = () => {
   const defaultStyles = useDefaultStyles()
 
-  const [widgetBody] = useStorage(GOAL_WIDGET, (value) =>
-    value === undefined
-      ? defaultStyles[GOAL_WIDGET]
-      : { ...defaultStyles[GOAL_WIDGET], ...value }
-  )
-  const [image] = useStorage(GW_IMAGE, (value) =>
-    value === undefined ? defaultStyles[GW_IMAGE] : value
-  )
-  const [leftText] = useStorage(LEFT_TEXT, (value) =>
-    value === defaultStyles[LEFT_TEXT]
-      ? defaultStyles[LEFT_TEXT]
-      : { ...defaultStyles[LEFT_TEXT], ...value }
-  )
-  const [rightText] = useStorage(RIGHT_TEXT, (value) =>
-    value === defaultStyles[RIGHT_TEXT]
-      ? defaultStyles[RIGHT_TEXT]
-      : { ...defaultStyles[RIGHT_TEXT], ...value }
-  )
-  const [progressBar] = useStorage(GW_PROGRESS_BAR, (value) =>
-    value === defaultStyles[GW_PROGRESS_BAR]
-      ? defaultStyles[GW_PROGRESS_BAR]
-      : { ...defaultStyles[GW_PROGRESS_BAR], ...value }
+  const [styles, _, { setStoreValue }] = useStorage("subGoalStyles", (value) =>
+    value
+      ? {
+          [GOAL_WIDGET]: {
+            ...defaultStyles[GOAL_WIDGET],
+            ...value[GOAL_WIDGET]
+          },
+          [GW_PROGRESS_BAR]: {
+            ...defaultStyles[GW_PROGRESS_BAR],
+            ...value[GW_PROGRESS_BAR]
+          },
+          [LEFT_TEXT]: {
+            ...defaultStyles[LEFT_TEXT],
+            ...value[LEFT_TEXT]
+          },
+          [RIGHT_TEXT]: {
+            ...defaultStyles[RIGHT_TEXT],
+            ...value[RIGHT_TEXT]
+          },
+          [GW_IMAGE]: {
+            ...defaultStyles[GW_IMAGE],
+            ...value[GW_IMAGE]
+          }
+        }
+      : defaultStyles
   )
 
-  return {
-    [GOAL_WIDGET]: widgetBody,
-    [GW_IMAGE]: image,
-    [GW_PROGRESS_BAR]: progressBar,
-    [LEFT_TEXT]: leftText,
-    [RIGHT_TEXT]: rightText
+  for (const selector in styles) {
+    if (typeof styles[selector] !== "string") {
+      const updateStyle = useUpdateStyles(selector)
+      for (const prop in styles[selector]) {
+        updateStyle(prop, styles[selector][prop])
+      }
+    }
   }
+
+  const setStyles = (selector: string) => (property: string, value: string) =>
+    setStoreValue({
+      ...styles,
+      [selector]: { ...styles[selector], [property]: value }
+    })
+
+  return { styles, setStyles }
 }
 
 export const useUpdateStyles = (selector: string) => {
