@@ -1,39 +1,31 @@
 import { ColorPicker } from "@mantine/core"
-import React, { useEffect } from "react"
-
-import { useStorage } from "@plasmohq/storage/hook"
+import React from "react"
 
 import { useUpdateStyles } from "~app/hooks"
 import type { SelectorProps } from "~app/types"
 
 interface Props {
   selectedStyles: SelectorProps
+  handleChangeEnd: (property: string, value: string) => void
 }
 
-const WidgetStyles = ({ selectedStyles }: Props) => {
+const WidgetStyles = ({ selectedStyles, handleChangeEnd }: Props) => {
   const { value, color, label, property } = selectedStyles
-  const [styles, _, { setRenderValue, setStoreValue }] = useStorage(value)
-
   const updStyle = useUpdateStyles(value)
 
-  const handleChange = (color: string) => {
-    setRenderValue({ ...styles, [property]: color })
-  }
-  const handleChangeEnd = (color: string) => {
-    setStoreValue({ ...styles, [property]: color })
-  }
+  const handleChange = (newColor: string) => updStyle(property, newColor)
 
-  useEffect(() => {
-    updStyle(property, styles?.[property] || color)
-  }, [color, updStyle, property])
+  const changeEnd = (newColor: string) => {
+    handleChangeEnd(property, newColor)
+  }
 
   return (
     <ColorPicker
       format="rgba"
       hueLabel={label}
-      value={styles?.[property] || color}
+      value={color}
       onChange={handleChange}
-      onChangeEnd={handleChangeEnd}
+      onChangeEnd={changeEnd}
     />
   )
 }
