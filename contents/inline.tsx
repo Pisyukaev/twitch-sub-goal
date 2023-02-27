@@ -1,9 +1,6 @@
 import {
-  Button,
   ColorSwatch,
-  CopyButton,
   Group,
-  Input,
   Select,
   Stack,
   Text,
@@ -12,6 +9,8 @@ import {
 import type { PlasmoContentScript, PlasmoGetInlineAnchor } from "plasmo"
 import { forwardRef, useMemo, useState } from "react"
 
+import CopyBtn from "~app/components/CopyBtn"
+import InputImage from "~app/components/InputImage"
 import WidgetStyles from "~app/components/WidgetStyles"
 import {
   DIALOG_CONTENT,
@@ -70,20 +69,20 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 )
 
 function PlasmoInline() {
-  const styles = useStyles()
+  const { styles, setStyles } = useStyles()
   const selectorsData = useMemo<SelectorProps[]>(
     () => [
       {
         value: GOAL_WIDGET,
         label: "Goal widget background",
-        color: styles[GOAL_WIDGET].backgroundColor,
-        property: "backgroundColor"
+        color: styles[GOAL_WIDGET]["background-color"],
+        property: "background-color"
       },
       {
         value: GW_PROGRESS_BAR,
         label: "Progress bar",
-        color: styles[GW_PROGRESS_BAR].backgroundColor,
-        property: "backgroundColor"
+        color: styles[GW_PROGRESS_BAR]["background-color"],
+        property: "background-color"
       },
       {
         value: LEFT_TEXT,
@@ -100,7 +99,6 @@ function PlasmoInline() {
     ],
     [styles]
   )
-  const [imgSrc, setImgSrc] = useState(styles[GW_IMAGE])
   const [selectedId, setSelectedId] = useState(0)
 
   const selectChange = (value: string) => {
@@ -109,6 +107,11 @@ function PlasmoInline() {
     )
     setSelectedId(findSelectedId)
   }
+
+  const imgData = styles[GW_IMAGE]
+
+  const handleChangeImg = setStyles(GW_IMAGE)
+  const handleChange = setStyles(selectorsData[selectedId].value)
 
   return (
     <ThemeProvider emotionCache={styleCache}>
@@ -119,17 +122,12 @@ function PlasmoInline() {
           onChange={selectChange}
           value={selectorsData[selectedId].value}
         />
-        <WidgetStyles selectedStyles={selectorsData[selectedId]} />
-        <Input.Wrapper label="Image link">
-          <Input value={imgSrc} onChange={(e) => setImgSrc(e.target.value)} />
-        </Input.Wrapper>
-        <CopyButton value="css of the twitch sub goal">
-          {({ copied, copy }) => (
-            <Button color={copied ? "teal" : "blue"} onClick={copy}>
-              {copied ? "Copied CSS" : "Copy CSS"}
-            </Button>
-          )}
-        </CopyButton>
+        <WidgetStyles
+          selectedStyles={selectorsData[selectedId]}
+          handleChangeEnd={handleChange}
+        />
+        <InputImage imgData={imgData} onChange={handleChangeImg} />
+        <CopyBtn />
       </Stack>
     </ThemeProvider>
   )
