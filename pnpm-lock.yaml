@@ -11,6 +11,7 @@ specifiers:
   '@types/node': 18.11.18
   '@types/react': 18.0.27
   '@types/react-dom': 18.0.10
+  cssbeautify: ^0.3.1
   plasmo: 0.63.0
   prettier: 2.8.3
   react: 18.2.0
@@ -22,6 +23,7 @@ dependencies:
   '@mantine/core': 5.10.1_pl7c6tg3txk3em5brrn6d2cdkm
   '@mantine/hooks': 5.10.1_react@18.2.0
   '@plasmohq/storage': 1.0.0_react@18.2.0
+  cssbeautify: 0.3.1
   plasmo: 0.63.0_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -3025,6 +3027,11 @@ packages:
   /css-what/6.1.0:
     resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
     engines: {node: '>= 6'}
+    dev: false
+
+  /cssbeautify/0.3.1:
+    resolution: {integrity: sha512-ljnSOCOiMbklF+dwPbpooyB78foId02vUrTDogWzu6ca2DCNB7Kc/BHEGBnYOlUYtwXvSW0mWTwaiO2pwFIoRg==}
+    hasBin: true
     dev: false
 
   /csso/4.2.0:
