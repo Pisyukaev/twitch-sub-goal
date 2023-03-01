@@ -2,7 +2,12 @@ import { Input } from "@mantine/core"
 import React from "react"
 import type { ChangeEvent } from "react"
 
-const InputImage = ({ onChange, imgData }) => {
+interface Props {
+  onChange: (cssProp: string, val: string) => void
+  imgData: { content: string }
+}
+
+const InputImage = ({ onChange, imgData }: Props) => {
   const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
     onChange("content", `url(${value})`)
 
