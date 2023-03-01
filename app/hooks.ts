@@ -39,11 +39,7 @@ export const useDefaultStyles = () => {
     [LEFT_TEXT]: { color: leftText.style.color },
     [RIGHT_TEXT]: { color: rightText.style.color },
     [GW_IMAGE]: {
-      "background-image": `url(${image.src})`,
-      "background-size": "64px",
-      width: "0px",
-      height: "0px",
-      padding: "64px 64px 0px 0px"
+      content: `url(${image.src})`
     }
   }
 }

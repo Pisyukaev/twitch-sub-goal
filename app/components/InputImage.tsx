@@ -4,9 +4,9 @@ import type { ChangeEvent } from "react"
 
 const InputImage = ({ onChange, imgData }) => {
   const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
-    onChange("background-image", `url(${value})`)
+    onChange("content", `url(${value})`)
 
-  const src = imgData["background-image"].replaceAll(/url\(|\)/g, "")
+  const src = imgData["content"].replaceAll(/url\(|\)/g, "")
 
   return (
     <Input.Wrapper label="Image link">
