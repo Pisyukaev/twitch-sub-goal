@@ -46,19 +46,17 @@ export const useDefaultStyles = () => {
     }
   })
 
-  const [defaultStyles, setDefaultStyles] = useStorage(
+  const [defaultStyles] = useStorage(
     "defaultStyles",
     (value) => value ?? styles.current
   )
 
-  const resetStyles = () => setDefaultStyles(styles.current)
-
-  return { defaultStyles, resetStyles }
+  return defaultStyles
 }
 
 export const useStyles = () => {
   const elements = useElements()
-  const { defaultStyles, resetStyles } = useDefaultStyles()
+  const defaultStyles = useDefaultStyles()
   const [styles, setStyles] = useStorage("customStyles", (value) =>
     value
       ? {
@@ -101,6 +99,8 @@ export const useStyles = () => {
       }
     }
   }, [styles])
+
+  const resetStyles = () => setStyles(defaultStyles)
 
   return {
     styles,
