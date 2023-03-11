@@ -1,8 +1,8 @@
 {
   "name": "twitch-sub-goal",
   "displayName": "Twitch sub goal",
-  "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "version": "1.0.0",
+  "description": "Simple extension to customize your twitch sub goal!",
   "author": "vitaly.zakutny",
   "scripts": {
     "dev": "plasmo dev",
