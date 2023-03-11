@@ -1,29 +1,36 @@
 import { ColorInput, ColorPicker } from "@mantine/core"
 import React, { useEffect, useState } from "react"
 
-import { useUpdateStyles } from "~app/hooks"
+import { useStyles } from "~app/hooks"
 import type { SelectorProps } from "~app/types"
 
 const DisabledIcon = () => null
 
 interface Props {
   selectedStyles: SelectorProps
-  handleChangeEnd: (property: string, value: string) => void
 }
 
-const WidgetStyles = ({ selectedStyles, handleChangeEnd }: Props) => {
-  const { value, color, label, property } = selectedStyles
+const WidgetStyles = ({ selectedStyles }: Props) => {
+  const { updElementStyles, updateStyle } = useStyles()
+  const { value, label, property, color } = selectedStyles
 
-  const updStyle = useUpdateStyles(value)
   const [localColor, setLocalColor] = useState(color)
 
-  const handleChange = (newColor: string) => {
-    updStyle(property, newColor)
+  const handleChange = (newColor: string | null) => {
+    if (!newColor) {
+      return
+    }
+
+    updElementStyles(value, property, newColor)
     setLocalColor(newColor)
   }
 
-  const changeEnd = (newColor: string) => {
-    handleChangeEnd(property, newColor)
+  const changeEnd = (newColor: string | null) => {
+    if (!newColor) {
+      return
+    }
+
+    updateStyle(value, property, newColor)
   }
 
   useEffect(() => {
