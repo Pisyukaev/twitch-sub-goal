@@ -11,6 +11,7 @@ import { forwardRef, useState } from "react"
 
 import CopyBtn from "~app/components/CopyBtn"
 import InputImage from "~app/components/InputImage"
+import Reset from "~app/components/Reset"
 import WidgetStyles from "~app/components/WidgetStyles"
 import { DIALOG_CONTENT, GOAL_WIDGET } from "~app/constants"
 import { useData } from "~app/hooks"
@@ -83,6 +84,7 @@ function PlasmoInline() {
         <WidgetStyles selectedStyles={selectorsData[selectedId]} />
         <InputImage />
         <CopyBtn />
+        <Reset />
       </Stack>
     </ThemeProvider>
   )
