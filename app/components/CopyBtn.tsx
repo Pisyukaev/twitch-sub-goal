@@ -5,7 +5,7 @@ import React from "react"
 import { useStorage } from "@plasmohq/storage/hook"
 
 const CopyBtn = () => {
-  const [css] = useStorage("subGoalStyles", (value) => value || {})
+  const [css] = useStorage("customStyles", (value) => value || {})
 
   const cssText = Object.entries(css).reduce((accum, [selector, styles]) => {
     const stylesText = Object.entries(styles).reduce(
