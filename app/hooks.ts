@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
@@ -9,6 +9,7 @@ import {
   LEFT_TEXT,
   RIGHT_TEXT
 } from "./constants"
+import type { SelectorProps } from "./types"
 
 export const useElements = () => {
   const widgetBody = useRef(document.querySelector<HTMLDivElement>(GOAL_WIDGET))
@@ -20,34 +21,45 @@ export const useElements = () => {
   )
 
   return {
-    widgetBody: widgetBody.current,
-    image: image.current,
-    leftText: leftText.current,
-    rightText: rightText.current,
-    progressBar: progressBar.current
+    [GOAL_WIDGET]: widgetBody.current,
+    [GW_IMAGE]: image.current,
+    [LEFT_TEXT]: leftText.current,
+    [RIGHT_TEXT]: rightText.current,
+    [GW_PROGRESS_BAR]: progressBar.current
   }
 }
 
 export const useDefaultStyles = () => {
-  const { leftText, progressBar, rightText, widgetBody, image } = useElements()
+  const elements = useElements()
 
-  return {
-    [GOAL_WIDGET]: { "background-color": widgetBody.style.backgroundColor },
-    [GW_PROGRESS_BAR]: {
-      "background-color": progressBar.style.backgroundColor
+  const styles = useRef({
+    [GOAL_WIDGET]: {
+      "background-color": elements[GOAL_WIDGET].style.backgroundColor
     },
-    [LEFT_TEXT]: { color: leftText.style.color },
-    [RIGHT_TEXT]: { color: rightText.style.color },
+    [GW_PROGRESS_BAR]: {
+      "background-color": elements[GW_PROGRESS_BAR].style.backgroundColor
+    },
+    [LEFT_TEXT]: { color: elements[LEFT_TEXT].style.color },
+    [RIGHT_TEXT]: { color: elements[RIGHT_TEXT].style.color },
     [GW_IMAGE]: {
-      content: `url(${image.src})`
+      content: `url(${elements[GW_IMAGE].src})`
     }
-  }
+  })
+
+  const [defaultStyles, setDefaultStyles] = useStorage(
+    "defaultStyles",
+    (value) => value ?? styles.current
+  )
+
+  const resetStyles = () => setDefaultStyles(styles.current)
+
+  return { defaultStyles, resetStyles }
 }
 
 export const useStyles = () => {
-  const defaultStyles = useDefaultStyles()
-
-  const [styles, _, { setStoreValue }] = useStorage("subGoalStyles", (value) =>
+  const elements = useElements()
+  const { defaultStyles, resetStyles } = useDefaultStyles()
+  const [styles, setStyles] = useStorage("customStyles", (value) =>
     value
       ? {
           [GOAL_WIDGET]: {
@@ -74,30 +86,61 @@ export const useStyles = () => {
       : defaultStyles
   )
 
-  for (const selector in styles) {
-    if (typeof styles[selector] !== "string") {
-      const updateStyle = useUpdateStyles(selector)
+  const updElementStyles = (selector: string, prop: string, value: string) => {
+    elements[selector].style[prop] = value
+  }
+
+  const updateStyle = (selector: string, prop: string, value: string) => {
+    setStyles({ ...styles, [selector]: { ...styles[selector], [prop]: value } })
+  }
+
+  useEffect(() => {
+    for (const selector in styles) {
       for (const prop in styles[selector]) {
-        updateStyle(prop, styles[selector][prop])
+        updElementStyles(selector, prop, styles[selector][prop])
       }
     }
+  }, [styles])
+
+  return {
+    styles,
+    updElementStyles,
+    resetStyles,
+    updateStyle
   }
-
-  const setStyles = (selector: string) => (property: string, value: string) =>
-    setStoreValue({
-      ...styles,
-      [selector]: { ...styles[selector], [property]: value }
-    })
-
-  return { styles, setStyles }
 }
 
-export const useUpdateStyles = (selector: string) => {
-  const element = document.querySelector<HTMLElement>(selector)
+export const useData = () => {
+  const { styles } = useStyles()
+  const data = useMemo<SelectorProps[]>(
+    () => [
+      {
+        value: GOAL_WIDGET,
+        label: "Goal widget background",
+        color: styles[GOAL_WIDGET]["background-color"],
+        property: "background-color"
+      },
+      {
+        value: GW_PROGRESS_BAR,
+        label: "Progress bar",
+        color: styles[GW_PROGRESS_BAR]["background-color"],
+        property: "background-color"
+      },
+      {
+        value: LEFT_TEXT,
+        label: "Left text",
+        color: styles[LEFT_TEXT]["color"],
+        property: "color"
+      },
+      {
+        value: RIGHT_TEXT,
+        label: "Right text",
+        color: styles[RIGHT_TEXT]["color"],
+        property: "color"
+      }
+    ],
+    [styles]
+  )
 
-  const updateStyle = (path: string, value: string) => {
-    element.style[path] = value
-  }
-
-  return updateStyle
+  return data
 }
