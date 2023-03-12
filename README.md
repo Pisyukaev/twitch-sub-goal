@@ -1,33 +1,24 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+<h1 style="text-align: center;">Twitch sub goal</h1>
 
-## Getting Started
+<div style="text-align: center;">
 
-First, run the development server:
+![chrome web store](https://badgen.net/chrome-web-store/v/heapnplmfdahfoanhpibmpmkkhiignim)
+![users](https://badgen.net/chrome-web-store/users/heapnplmfdahfoanhpibmpmkkhiignim)
+![rating](https://badgen.net/chrome-web-store/rating/heapnplmfdahfoanhpibmpmkkhiignim)
+![Twitch Status](https://img.shields.io/twitch/status/pisyukaev?label=pisyukaev&logo=twitch)
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+</div>
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+This very simple extension to customize your twitch sub/follow goals!
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+## How to use
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+1. Install this extension from [chrome store](https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim)
+2. Go to [twitch dashboard](https://dashboard.twitch.tv/)
+3. Click **Manage Goals** ![Manage Goals](/.github/assets/manage_goals.png)
+4. Customize it your goal ![customized goal](/.github/assets/customize_goal.png)
+5. Copy widget link ![widget link](/.github/assets/widget_link.png)
+6. Paste widget link to OBS like browser source ![widget link obs](/.github/assets/widget_link_obs.png)
+7. Click **Copy CSS** button on twitch dashboard ![Copy CSS button](/.github/assets/copy_css_btn.png)
+8. Paste copied styles in **Custom CSS** section to OBS and press **OK** button ![css in obs](/.github/assets/css_in_obs.png)
+9. PROFIT! Now you have exclusive twitch sub/follow goal ![exclusive goal](/.github/assets/exclusive_goal.png)
