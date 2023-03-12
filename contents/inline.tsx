@@ -26,7 +26,8 @@ const styleElement = document.createElement("style")
 const styleCache = createEmotionCache({
   key: "plasmo-mantine-cache",
   prepend: true,
-  container: styleElement
+  container: styleElement,
+  speedy: false
 })
 
 export const getStyle = () => styleElement
