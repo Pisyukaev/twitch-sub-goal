@@ -1,7 +1,7 @@
 {
   "name": "twitch-sub-goal",
   "displayName": "Twitch sub goal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple extension to customize your twitch sub goal!",
   "author": "vitaly.zakutny",
   "scripts": {
