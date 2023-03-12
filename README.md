@@ -1,13 +1,20 @@
-<h1 style="text-align: center;">Twitch sub goal</h1>
+<h1 align="center">Twitch sub goal</h1>
 
-<div style="text-align: center;">
+<p align="center">
+  <a aria-label="chrome web store" href="https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim">
+    <img alt="chrome web store" src="https://badgen.net/chrome-web-store/v/heapnplmfdahfoanhpibmpmkkhiignim"/>
+  </a>
+  <a aria-label="users" href="https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim">
+    <img alt="users" src="https://badgen.net/chrome-web-store/users/heapnplmfdahfoanhpibmpmkkhiignim"/>
+  </a>
+  <a aria-label="rating" >
+    <img alt="rating" src="https://badgen.net/chrome-web-store/rating/heapnplmfdahfoanhpibmpmkkhiignim"/>
+  </a>
+  <a aria-label="Twitch Stream" href="https://www.twitch.tv/pisyukaev">
+    <img alt="twitch" src="https://img.shields.io/twitch/status/pisyukaev?label=pisyukaev&logo=twitch"/>
+  </a>
+</p>
 
-![chrome web store](https://badgen.net/chrome-web-store/v/heapnplmfdahfoanhpibmpmkkhiignim)
-![users](https://badgen.net/chrome-web-store/users/heapnplmfdahfoanhpibmpmkkhiignim)
-![rating](https://badgen.net/chrome-web-store/rating/heapnplmfdahfoanhpibmpmkkhiignim)
-![Twitch Status](https://img.shields.io/twitch/status/pisyukaev?label=pisyukaev&logo=twitch)
-
-</div>
 
 This very simple extension to customize your twitch sub/follow goals!
 
