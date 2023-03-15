@@ -11,6 +11,7 @@ interface Props extends PropsWithChildren {
 export function ThemeProvider({ emotionCache, children }: Props) {
   const [theme] = useLocalStorage<ColorScheme>({
     key: "twilight.theme",
+    defaultValue: "dark",
     deserialize(value) {
       return Number(value) ? "dark" : "light"
     }
