@@ -6,7 +6,7 @@ import {
   Text,
   createEmotionCache
 } from "@mantine/core"
-import type { PlasmoContentScript, PlasmoGetInlineAnchor } from "plasmo"
+import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo"
 import { forwardRef, useState } from "react"
 
 import CopyBtn from "~app/components/CopyBtn"
@@ -17,8 +17,8 @@ import { DIALOG_CONTENT, GOAL_WIDGET } from "~app/constants"
 import { useData } from "~app/hooks"
 import { ThemeProvider } from "~theme"
 
-export const config: PlasmoContentScript = {
-  matches: ["https://dashboard.twitch.tv/u/*/stream-manager"]
+export const config: PlasmoCSConfig = {
+  matches: ["https://dashboard.twitch.tv/*"]
 }
 
 const styleElement = document.createElement("style")
