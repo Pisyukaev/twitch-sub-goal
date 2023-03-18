@@ -6,14 +6,18 @@ import {
   Text,
   createEmotionCache
 } from "@mantine/core"
-import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo"
+import type {
+  PlasmoCSConfig,
+  PlasmoGetInlineAnchor,
+  PlasmoMountShadowHost
+} from "plasmo"
 import { forwardRef, useState } from "react"
 
 import CopyBtn from "~app/components/CopyBtn"
 import InputImage from "~app/components/InputImage"
 import Reset from "~app/components/Reset"
 import WidgetStyles from "~app/components/WidgetStyles"
-import { DIALOG_CONTENT, GOAL_WIDGET } from "~app/constants"
+import { DIALOG_CONTENT, WIDGET_LINK } from "~app/constants"
 import { useData } from "~app/hooks"
 import { ThemeProvider } from "~theme"
 
@@ -32,14 +36,23 @@ const styleCache = createEmotionCache({
 
 export const getStyle = () => styleElement
 
-export const getInlineAnchor: PlasmoGetInlineAnchor = () => {
-  const twitchSubGoal = document.querySelector(GOAL_WIDGET)
+export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
+  document.querySelector(WIDGET_LINK)
 
-  if (!twitchSubGoal) {
+export const mountShadowHost: PlasmoMountShadowHost = ({
+  shadowHost,
+  anchor,
+  observer
+}) => {
+  if (!anchor.element) {
+    observer.disconnect()
+
     return
   }
 
-  return document.querySelector(DIALOG_CONTENT)
+  const dialogContent = document.querySelector(DIALOG_CONTENT)
+
+  dialogContent.appendChild(shadowHost)
 }
 
 interface ItemProps extends React.ComponentPropsWithoutRef<"div"> {
