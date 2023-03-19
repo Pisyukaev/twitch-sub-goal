@@ -9,7 +9,7 @@ import {
   LEFT_TEXT,
   RIGHT_TEXT
 } from "./constants"
-import type { SelectorProps } from "./types"
+import type { SelectorProps, StylesData } from "./types"
 
 export const useElements = () => {
   const widgetBody = useRef(document.querySelector<HTMLDivElement>(GOAL_WIDGET))
@@ -44,11 +44,11 @@ export const useDefaultStyles = () => {
     [GW_IMAGE]: {
       content: `url(${elements[GW_IMAGE].src})`
     }
-  })
+  } as StylesData)
 
   const [defaultStyles] = useStorage(
     "defaultStyles",
-    (value) => value ?? styles.current
+    (value?: StylesData) => value ?? styles.current
   )
 
   return defaultStyles
@@ -57,30 +57,15 @@ export const useDefaultStyles = () => {
 export const useStyles = () => {
   const elements = useElements()
   const defaultStyles = useDefaultStyles()
-  const [styles, setStyles] = useStorage("customStyles", (value) =>
+  const [styles, setStyles] = useStorage("customStyles", (value?: StylesData) =>
     value
-      ? {
-          [GOAL_WIDGET]: {
-            ...defaultStyles[GOAL_WIDGET],
-            ...value[GOAL_WIDGET]
-          },
-          [GW_PROGRESS_BAR]: {
-            ...defaultStyles[GW_PROGRESS_BAR],
-            ...value[GW_PROGRESS_BAR]
-          },
-          [LEFT_TEXT]: {
-            ...defaultStyles[LEFT_TEXT],
-            ...value[LEFT_TEXT]
-          },
-          [RIGHT_TEXT]: {
-            ...defaultStyles[RIGHT_TEXT],
-            ...value[RIGHT_TEXT]
-          },
-          [GW_IMAGE]: {
-            ...defaultStyles[GW_IMAGE],
-            ...value[GW_IMAGE]
-          }
-        }
+      ? Object.keys(defaultStyles).reduce(
+          (accum, selector) => ({
+            ...accum,
+            [selector]: { ...defaultStyles[selector], ...value[selector] }
+          }),
+          defaultStyles
+        )
       : defaultStyles
   )
 
