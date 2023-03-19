@@ -88,7 +88,7 @@ function PlasmoInline() {
 
   return (
     <ThemeProvider emotionCache={styleCache}>
-      <Stack align="stretch" w="100%" p="lg">
+      <Stack align="stretch" w="100%">
         <Select
           data={selectorsData}
           itemComponent={SelectItem}
