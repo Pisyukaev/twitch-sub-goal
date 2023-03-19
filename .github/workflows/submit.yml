@@ -23,12 +23,13 @@ jobs:
         with:
           node-version: 16.x
           cache: "pnpm"
-      - name: Build extension artifact
-        run: pnpm build
-      - name: Zip extension artifact
-        run: pnpm package
+      - name: Build Chrome artifact
+        run: pnpm build --target=chrome-mv3 --zip
+      - name: Build Firefox artifact
+        run: pnpm build --target=firefox-mv2 --zip
       - name: Browser Platform Publish
         uses: PlasmoHQ/bpp@v3
         with:
           keys: ${{ secrets.SUBMIT_KEYS }}
-          artifact: build/chrome-mv3-prod.zip
+          chrome-file: build/chrome-mv3-prod.zip
+          firefox-file: build/firefox-mv2-prod.zip
