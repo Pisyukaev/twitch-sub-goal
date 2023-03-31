@@ -34,7 +34,10 @@ export const useDefaultStyles = () => {
 
   const styles = useRef({
     [GOAL_WIDGET]: {
-      "background-color": elements[GOAL_WIDGET].style.backgroundColor
+      "background-color": elements[GOAL_WIDGET].style.backgroundColor,
+      "border-color": elements[GOAL_WIDGET].style.borderColor,
+      "border-width": elements[GOAL_WIDGET].style.borderWidth,
+      "border-radius": elements[GOAL_WIDGET].style.borderRadius || "1rem"
     },
     [GW_PROGRESS_BAR]: {
       "background-color": elements[GW_PROGRESS_BAR].style.backgroundColor
