@@ -2,14 +2,31 @@ import { useEffect, useMemo, useRef } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { getMeasureValue } from "./components/utils"
 import {
   GOAL_WIDGET,
   GW_IMAGE,
   GW_PROGRESS_BAR,
+  K_REM,
   LEFT_TEXT,
   RIGHT_TEXT
 } from "./constants"
 import type { SelectorProps, StylesData } from "./types"
+
+const useDebounce = <T extends (...args: any[]) => any>(
+  callback: T,
+  delay: number
+) => {
+  const timeout = useRef<NodeJS.Timeout>()
+
+  return (...args: Parameters<T>) => {
+    if (timeout.current) {
+      clearTimeout(timeout.current)
+    }
+
+    timeout.current = setTimeout(() => callback(...args), delay)
+  }
+}
 
 export const useElements = () => {
   const widgetBody = useRef(document.querySelector<HTMLDivElement>(GOAL_WIDGET))
@@ -34,7 +51,10 @@ export const useDefaultStyles = () => {
 
   const styles = useRef({
     [GOAL_WIDGET]: {
-      "background-color": elements[GOAL_WIDGET].style.backgroundColor
+      "background-color": elements[GOAL_WIDGET].style.backgroundColor,
+      "border-color": elements[GOAL_WIDGET].style.borderColor,
+      "border-width": elements[GOAL_WIDGET].style.borderWidth,
+      "border-radius": elements[GOAL_WIDGET].style.borderRadius || "1rem"
     },
     [GW_PROGRESS_BAR]: {
       "background-color": elements[GW_PROGRESS_BAR].style.backgroundColor
@@ -57,6 +77,9 @@ export const useDefaultStyles = () => {
 export const useStyles = () => {
   const elements = useElements()
   const defaultStyles = useDefaultStyles()
+
+  const isUpdatedStyles = useRef(false)
+
   const [styles, setStyles] = useStorage("customStyles", (value?: StylesData) =>
     value
       ? Object.keys(defaultStyles).reduce(
@@ -69,29 +92,51 @@ export const useStyles = () => {
       : defaultStyles
   )
 
+  const debouncedSetStyles = useDebounce(setStyles, 200)
+
   const updElementStyles = (selector: string, prop: string, value: string) => {
-    elements[selector].style[prop] = value
+    let newValue = value
+    if (value.match("rem")) {
+      const { numberValue, measureValue } = getMeasureValue(value)
+
+      newValue = `${numberValue / K_REM}${measureValue}`
+    }
+
+    elements[selector].style[prop] = newValue
   }
 
-  const updateStyle = (selector: string, prop: string, value: string) => {
-    setStyles({ ...styles, [selector]: { ...styles[selector], [prop]: value } })
+  const updateStyles = (selector: string, prop: string, value: string) => {
+    debouncedSetStyles({
+      ...styles,
+      [selector]: { ...styles[selector], [prop]: value }
+    })
+
+    updElementStyles(selector, prop, value)
   }
 
   useEffect(() => {
+    if (isUpdatedStyles.current) {
+      return
+    }
+
     for (const selector in styles) {
       for (const prop in styles[selector]) {
         updElementStyles(selector, prop, styles[selector][prop])
       }
     }
+
+    isUpdatedStyles.current = styles !== defaultStyles
   }, [styles])
 
-  const resetStyles = () => setStyles(defaultStyles)
+  const resetStyles = () => {
+    setStyles(defaultStyles)
+    isUpdatedStyles.current = false
+  }
 
   return {
     styles,
-    updElementStyles,
     resetStyles,
-    updateStyle
+    updateStyles
   }
 }
 
@@ -100,28 +145,68 @@ export const useData = () => {
   const data = useMemo<SelectorProps[]>(
     () => [
       {
-        value: GOAL_WIDGET,
-        label: "Goal widget background",
-        color: styles[GOAL_WIDGET]["background-color"],
-        property: "background-color"
+        selector: GOAL_WIDGET,
+        label: "Background",
+        value: styles[GOAL_WIDGET]["background-color"],
+        property: "background-color",
+        group: "goalWidget",
+        componentName: "WidgetStyles"
       },
       {
-        value: GW_PROGRESS_BAR,
+        selector: GOAL_WIDGET,
+        label: "Border",
+        value: styles[GOAL_WIDGET]["border-color"],
+        property: "border-color",
+        group: "border",
+        componentName: "WidgetStyles"
+      },
+      {
+        selector: GW_IMAGE,
+        label: "Image link",
+        value: styles[GW_IMAGE].content,
+        property: "content",
+        group: "image",
+        componentName: "InputImage"
+      },
+      {
+        selector: GOAL_WIDGET,
+        label: "Border width",
+        value: styles[GOAL_WIDGET]["border-width"],
+        property: "border-width",
+        group: "border",
+        componentName: "NumberProp"
+      },
+      {
+        selector: GOAL_WIDGET,
+        label: "Border radius",
+        value: styles[GOAL_WIDGET]["border-radius"],
+        property: "border-radius",
+        group: "border",
+        componentName: "NumberProp"
+      },
+      {
+        selector: GW_PROGRESS_BAR,
         label: "Progress bar",
-        color: styles[GW_PROGRESS_BAR]["background-color"],
-        property: "background-color"
+        value: styles[GW_PROGRESS_BAR]["background-color"],
+        property: "background-color",
+        group: "progressBar",
+        componentName: "WidgetStyles"
       },
       {
-        value: LEFT_TEXT,
+        selector: LEFT_TEXT,
         label: "Left text",
-        color: styles[LEFT_TEXT]["color"],
-        property: "color"
+        value: styles[LEFT_TEXT]["color"],
+        property: "color",
+        group: "leftText",
+        componentName: "WidgetStyles"
       },
       {
-        value: RIGHT_TEXT,
+        selector: RIGHT_TEXT,
         label: "Right text",
-        color: styles[RIGHT_TEXT]["color"],
-        property: "color"
+        value: styles[RIGHT_TEXT]["color"],
+        property: "color",
+        group: "rightText",
+        componentName: "WidgetStyles"
       }
     ],
     [styles]

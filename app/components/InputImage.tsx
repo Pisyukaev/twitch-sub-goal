@@ -2,15 +2,22 @@ import { Input } from "@mantine/core"
 import React from "react"
 import type { ChangeEvent } from "react"
 
-import { GW_IMAGE } from "~app/constants"
-import { useStyles } from "~app/hooks"
+import type { SelectorProps, UpdateStylesFn } from "~app/types"
 
-const InputImage = () => {
-  const { styles, updateStyle } = useStyles()
-  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
-    updateStyle(GW_IMAGE, "content", `url(${value})`)
+interface Props {
+  selectedStyles: SelectorProps
+  onUpdate: UpdateStylesFn
+}
 
-  const src = styles[GW_IMAGE]["content"].replaceAll(/url\(|\)/g, "")
+const InputImage = ({ selectedStyles, onUpdate }: Props) => {
+  const { value, selector, property } = selectedStyles
+
+  const handleChange = ({
+    target: { value: imgSrc }
+  }: ChangeEvent<HTMLInputElement>) =>
+    onUpdate(selector, property, `url(${imgSrc})`)
+
+  const src = value.replaceAll(/url\(|\)/g, "")
 
   return (
     <Input.Wrapper label="Image link">

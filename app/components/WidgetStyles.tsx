@@ -1,41 +1,32 @@
 import { ColorInput, ColorPicker } from "@mantine/core"
 import React, { useEffect, useState } from "react"
 
-import { useStyles } from "~app/hooks"
-import type { SelectorProps } from "~app/types"
+import type { SelectorProps, UpdateStylesFn } from "~app/types"
 
 const DisabledIcon = () => null
 
 interface Props {
   selectedStyles: SelectorProps
+  onUpdate: UpdateStylesFn
 }
 
-const WidgetStyles = ({ selectedStyles }: Props) => {
-  const { updElementStyles, updateStyle } = useStyles()
-  const { value, label, property, color } = selectedStyles
+const WidgetStyles = ({ selectedStyles, onUpdate }: Props) => {
+  const { selector, label, property, value } = selectedStyles
 
-  const [localColor, setLocalColor] = useState(color)
+  const [localColor, setLocalColor] = useState(value)
 
   const handleChange = (newColor: string | null) => {
     if (!newColor) {
       return
     }
 
-    updElementStyles(value, property, newColor)
+    onUpdate(selector, property, newColor)
     setLocalColor(newColor)
   }
 
-  const changeEnd = (newColor: string | null) => {
-    if (!newColor) {
-      return
-    }
-
-    updateStyle(value, property, newColor)
-  }
-
   useEffect(() => {
-    setLocalColor(color)
-  }, [color])
+    setLocalColor(value)
+  }, [value])
 
   return (
     <>
@@ -44,13 +35,11 @@ const WidgetStyles = ({ selectedStyles }: Props) => {
         hueLabel={label}
         value={localColor}
         onChange={handleChange}
-        onChangeEnd={changeEnd}
       />
       <ColorInput
         format="rgba"
         value={localColor}
         onChange={handleChange}
-        onChangeEnd={changeEnd}
         rightSection={<DisabledIcon />}
         withPicker={false}
         withPreview={false}
