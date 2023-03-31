@@ -145,28 +145,68 @@ export const useData = () => {
   const data = useMemo<SelectorProps[]>(
     () => [
       {
-        value: GOAL_WIDGET,
-        label: "Goal widget background",
-        color: styles[GOAL_WIDGET]["background-color"],
-        property: "background-color"
+        selector: GOAL_WIDGET,
+        label: "Background",
+        value: styles[GOAL_WIDGET]["background-color"],
+        property: "background-color",
+        group: "goalWidget",
+        componentName: "WidgetStyles"
       },
       {
-        value: GW_PROGRESS_BAR,
+        selector: GOAL_WIDGET,
+        label: "Border",
+        value: styles[GOAL_WIDGET]["border-color"],
+        property: "border-color",
+        group: "border",
+        componentName: "WidgetStyles"
+      },
+      {
+        selector: GW_IMAGE,
+        label: "Image link",
+        value: styles[GW_IMAGE].content,
+        property: "content",
+        group: "image",
+        componentName: "InputImage"
+      },
+      {
+        selector: GOAL_WIDGET,
+        label: "Border width",
+        value: styles[GOAL_WIDGET]["border-width"],
+        property: "border-width",
+        group: "border",
+        componentName: "NumberProp"
+      },
+      {
+        selector: GOAL_WIDGET,
+        label: "Border radius",
+        value: styles[GOAL_WIDGET]["border-radius"],
+        property: "border-radius",
+        group: "border",
+        componentName: "NumberProp"
+      },
+      {
+        selector: GW_PROGRESS_BAR,
         label: "Progress bar",
-        color: styles[GW_PROGRESS_BAR]["background-color"],
-        property: "background-color"
+        value: styles[GW_PROGRESS_BAR]["background-color"],
+        property: "background-color",
+        group: "progressBar",
+        componentName: "WidgetStyles"
       },
       {
-        value: LEFT_TEXT,
+        selector: LEFT_TEXT,
         label: "Left text",
-        color: styles[LEFT_TEXT]["color"],
-        property: "color"
+        value: styles[LEFT_TEXT]["color"],
+        property: "color",
+        group: "leftText",
+        componentName: "WidgetStyles"
       },
       {
-        value: RIGHT_TEXT,
+        selector: RIGHT_TEXT,
         label: "Right text",
-        color: styles[RIGHT_TEXT]["color"],
-        property: "color"
+        value: styles[RIGHT_TEXT]["color"],
+        property: "color",
+        group: "rightText",
+        componentName: "WidgetStyles"
       }
     ],
     [styles]
