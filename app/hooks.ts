@@ -2,10 +2,12 @@ import { useEffect, useMemo, useRef } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { getMeasureValue } from "./components/utils"
 import {
   GOAL_WIDGET,
   GW_IMAGE,
   GW_PROGRESS_BAR,
+  K_REM,
   LEFT_TEXT,
   RIGHT_TEXT
 } from "./constants"
@@ -75,6 +77,9 @@ export const useDefaultStyles = () => {
 export const useStyles = () => {
   const elements = useElements()
   const defaultStyles = useDefaultStyles()
+
+  const isUpdatedStyles = useRef(false)
+
   const [styles, setStyles] = useStorage("customStyles", (value?: StylesData) =>
     value
       ? Object.keys(defaultStyles).reduce(
@@ -87,29 +92,51 @@ export const useStyles = () => {
       : defaultStyles
   )
 
+  const debouncedSetStyles = useDebounce(setStyles, 200)
+
   const updElementStyles = (selector: string, prop: string, value: string) => {
-    elements[selector].style[prop] = value
+    let newValue = value
+    if (value.match("rem")) {
+      const { numberValue, measureValue } = getMeasureValue(value)
+
+      newValue = `${numberValue / K_REM}${measureValue}`
+    }
+
+    elements[selector].style[prop] = newValue
   }
 
-  const updateStyle = (selector: string, prop: string, value: string) => {
-    setStyles({ ...styles, [selector]: { ...styles[selector], [prop]: value } })
+  const updateStyles = (selector: string, prop: string, value: string) => {
+    debouncedSetStyles({
+      ...styles,
+      [selector]: { ...styles[selector], [prop]: value }
+    })
+
+    updElementStyles(selector, prop, value)
   }
 
   useEffect(() => {
+    if (isUpdatedStyles.current) {
+      return
+    }
+
     for (const selector in styles) {
       for (const prop in styles[selector]) {
         updElementStyles(selector, prop, styles[selector][prop])
       }
     }
+
+    isUpdatedStyles.current = styles !== defaultStyles
   }, [styles])
 
-  const resetStyles = () => setStyles(defaultStyles)
+  const resetStyles = () => {
+    setStyles(defaultStyles)
+    isUpdatedStyles.current = false
+  }
 
   return {
     styles,
-    updElementStyles,
     resetStyles,
-    updateStyle
+    updateStyles
   }
 }
 
