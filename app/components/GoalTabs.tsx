@@ -5,6 +5,7 @@ import type { SelectorProps, UpdateStylesFn } from "~app/types"
 
 import InputImage from "./InputImage"
 import NumberProp from "./NumberProp"
+import SelectFont from "./SelectFont"
 import WidgetStyles from "./WidgetStyles"
 
 const getComponent = (componentName: string) => {
@@ -18,6 +19,8 @@ const getComponent = (componentName: string) => {
     case "InputImage":
       return InputImage
 
+    case "SelectFont":
+      return SelectFont
     default:
       return null
   }
