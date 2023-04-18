@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { fetchFontList, loadFont } from "./api/fonts"
 import { getMeasureValue } from "./components/utils"
 import {
   GOAL_WIDGET,
@@ -11,7 +12,7 @@ import {
   LEFT_TEXT,
   RIGHT_TEXT
 } from "./constants"
-import type { SelectorProps, StylesData } from "./types"
+import type { Font, SelectorProps, StylesData } from "./types"
 
 const useDebounce = <T extends (...args: any[]) => any>(
   callback: T,
@@ -46,6 +47,33 @@ export const useElements = () => {
   }
 }
 
+export const useFonts = () => {
+  const [fonts, setFonts] = useState<Font[]>([])
+  const [, setSelectedFont] = useStorage("selectedFont")
+
+  useEffect(() => {
+    async function loadFonts() {
+      const fontList = await fetchFontList()
+
+      setFonts(fontList)
+    }
+
+    loadFonts()
+  }, [])
+
+  const setFont = (
+    selector: string,
+    fontData: { value: string; fontFaces: string[] }
+  ) => {
+    setSelectedFont((prev) => ({
+      ...prev,
+      [selector]: fontData
+    }))
+  }
+
+  return { fonts, setFont }
+}
+
 export const useDefaultStyles = () => {
   const elements = useElements()
 
@@ -59,8 +87,16 @@ export const useDefaultStyles = () => {
     [GW_PROGRESS_BAR]: {
       "background-color": elements[GW_PROGRESS_BAR].style.backgroundColor
     },
-    [LEFT_TEXT]: { color: elements[LEFT_TEXT].style.color },
-    [RIGHT_TEXT]: { color: elements[RIGHT_TEXT].style.color },
+    [LEFT_TEXT]: {
+      color: elements[LEFT_TEXT].style.color,
+      "font-size": elements[LEFT_TEXT].style.fontSize || "18px",
+      "font-family": elements[LEFT_TEXT].style.fontFamily || "Inter"
+    },
+    [RIGHT_TEXT]: {
+      color: elements[RIGHT_TEXT].style.color,
+      "font-size": elements[RIGHT_TEXT].style.fontSize || "18px",
+      "font-family": elements[RIGHT_TEXT].style.fontFamily || "Inter"
+    },
     [GW_IMAGE]: {
       content: `url(${elements[GW_IMAGE].src})`
     }
@@ -79,6 +115,22 @@ export const useStyles = () => {
   const defaultStyles = useDefaultStyles()
 
   const isUpdatedStyles = useRef(false)
+
+  const [selectedFont] = useStorage("selectedFont")
+
+  useEffect(() => {
+    async function loadFonts() {
+      const fonts = Object.values(selectedFont)
+        .flatMap(({ value }) => value)
+        .filter(Boolean)
+
+      await Promise.all(fonts.map((font) => loadFont(font)))
+    }
+
+    if (selectedFont) {
+      loadFonts()
+    }
+  }, [selectedFont])
 
   const [styles, setStyles] = useStorage("customStyles", (value?: StylesData) =>
     value
@@ -201,12 +253,44 @@ export const useData = () => {
         componentName: "WidgetStyles"
       },
       {
+        selector: LEFT_TEXT,
+        label: "Font family",
+        value: styles[LEFT_TEXT]["font-family"],
+        property: "font-family",
+        group: "leftText",
+        componentName: "SelectFont"
+      },
+      {
+        selector: LEFT_TEXT,
+        label: "Text size",
+        value: styles[LEFT_TEXT]["font-size"],
+        property: "font-size",
+        group: "leftText",
+        componentName: "NumberProp"
+      },
+      {
         selector: RIGHT_TEXT,
         label: "Right text",
         value: styles[RIGHT_TEXT]["color"],
         property: "color",
         group: "rightText",
         componentName: "WidgetStyles"
+      },
+      {
+        selector: RIGHT_TEXT,
+        label: "Font family",
+        value: styles[RIGHT_TEXT]["font-family"],
+        property: "font-family",
+        group: "rightText",
+        componentName: "SelectFont"
+      },
+      {
+        selector: RIGHT_TEXT,
+        label: "Text size",
+        value: styles[RIGHT_TEXT]["font-size"],
+        property: "font-size",
+        group: "rightText",
+        componentName: "NumberProp"
       }
     ],
     [styles]
