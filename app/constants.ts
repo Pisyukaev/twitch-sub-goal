@@ -10,5 +10,5 @@ export const WIDGET_LINK =
 export const K_REM = 3
 
 export const FONTS_SOURCE_API = "https://api.fontsource.org/v1/fonts"
-export const SUBSETS = ["latin", "latin-ext", "cyrillic", "cyrillic-ext"]
+export const SUBSETS = ["latin", "cyrillic"]
 export const WEIGHTS = ["400"]
