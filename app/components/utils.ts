@@ -40,13 +40,8 @@ export const getFontSubsetWithUrls = (fontData: FontData) => {
  */
 export const prepareFont = (font: FontData) => {
   const subsets = getFontSubsetWithUrls(font)
-  const fontFaces = subsets.map(
-    ([
-      subset,
-      {
-        url: { woff2 }
-      }
-    ]) => createFontFace(font.family, woff2)
+  const fontFaces = subsets.map(([, subsetUrls]) =>
+    createFontFace(font.family, subsetUrls.url.woff2)
   )
 
   return fontFaces
