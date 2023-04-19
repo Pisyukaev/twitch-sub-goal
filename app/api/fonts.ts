@@ -1,9 +1,6 @@
+import { FONTS_SOURCE_API, SUBSETS, WEIGHTS } from "~app/constants"
 import type { Font, FontData, FontList } from "~app/types"
 import { prepareFont } from "~app/utils"
-
-const FONTS_SOURCE_API = "https://api.fontsource.org/v1/fonts"
-const SUBSETS = ["latin", "latin-ext", "cyrillic", "cyrillic-ext"]
-const WEIGHTS = ["400"]
 
 export async function fetchFontData(fontFamily: string) {
   let fontData = {} as FontData
