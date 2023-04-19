@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
+import { getMeasureValue } from "~app/utils"
+
 import { fetchFontList, loadFont } from "./api/fonts"
-import { getMeasureValue } from "./components/utils"
 import {
   GOAL_WIDGET,
   GW_IMAGE,

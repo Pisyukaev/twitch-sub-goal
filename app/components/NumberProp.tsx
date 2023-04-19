@@ -2,8 +2,7 @@ import { NumberInput } from "@mantine/core"
 import React, { useState } from "react"
 
 import type { SelectorProps, UpdateStylesFn } from "~app/types"
-
-import { getMeasureValue } from "./utils"
+import { getMeasureValue } from "~app/utils"
 
 interface Props {
   selectedStyles: SelectorProps

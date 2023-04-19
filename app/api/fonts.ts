@@ -1,5 +1,5 @@
-import { prepareFont } from "~app/components/utils"
 import type { Font, FontData, FontList } from "~app/types"
+import { prepareFont } from "~app/utils"
 
 const FONTS_SOURCE_API = "https://api.fontsource.org/v1/fonts"
 const SUBSETS = ["latin", "latin-ext", "cyrillic", "cyrillic-ext"]

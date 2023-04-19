@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react"
 import { fetchFontData } from "~app/api/fonts"
 import { useFonts } from "~app/hooks"
 import type { SelectorProps, UpdateStylesFn } from "~app/types"
-
-import { createFontFacesCSS } from "./utils"
+import { createFontFacesCSS } from "~app/utils"
 
 interface Props {
   onUpdate: UpdateStylesFn
