@@ -1,4 +1,4 @@
-import type { FontData } from "~app/types"
+import type { FontData, FontVariant } from "~app/types"
 
 export const getMeasureValue = (string: string) => {
   const regExp = /((?:\d*\.)?\d+)(\D+)/
@@ -17,7 +17,7 @@ const createFontFace = (fontFamily: string, url: string) => {
   return fontFace
 }
 
-export const getFontStyle = (fontVariant) => {
+export const getFontStyle = (fontVariant: FontVariant["400"]) => {
   const style = Object.keys(fontVariant).includes("normal")
     ? "normal"
     : "italic"
