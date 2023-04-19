@@ -25,10 +25,6 @@ const WidgetStyles = ({ selectedStyles, onUpdate }: Props) => {
 
   return (
     <ColorInput
-      /**
-       * TOOD: Add select color format
-       * @see https://mantine.dev/core/color-input/#formats
-       */
       format="rgba"
       label={label}
       value={localColor}
