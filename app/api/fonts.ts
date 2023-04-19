@@ -32,7 +32,7 @@ export async function loadFont(fontFamily: string) {
 }
 
 export async function fetchFontList() {
-  let fonts = [] as Font[]
+  const fonts: Font[] = []
 
   try {
     const response = await fetch(
@@ -42,10 +42,12 @@ export async function fetchFontList() {
     )
     const list: FontList = await response.json()
 
-    fonts = list.map(({ id, family }) => ({
-      value: id,
-      label: family
-    }))
+    fonts.push(
+      ...list.map<Font>(({ id, family }) => ({
+        value: id,
+        label: family
+      }))
+    )
   } catch (e) {
     console.warn("Error fetching fonts", e)
   } finally {
