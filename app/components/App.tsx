@@ -1,7 +1,8 @@
 import { Stack } from "@mantine/core"
 import React from "react"
 
-import { useData, useStyles } from "~app/hooks"
+import { useData } from "~app/hooks"
+import useStyles from "~app/hooks/useStyles"
 
 import CopyBtn from "./CopyBtn"
 import GoalTabs from "./GoalTabs"
