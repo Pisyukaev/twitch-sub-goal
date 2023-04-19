@@ -2,10 +2,12 @@ import { FONTS_SOURCE_API, SUBSETS, WEIGHTS } from "~app/constants"
 import type { Font, FontData, FontList } from "~app/types"
 import { prepareFont } from "~app/utils"
 
-export async function fetchFontData(fontFamily: string) {
+export async function fetchFontData(fontFamily: string, signal?: AbortSignal) {
   let fontData = {} as FontData
   try {
-    const response = await fetch(`${FONTS_SOURCE_API}/${fontFamily}`)
+    const url = new URL(`${FONTS_SOURCE_API}/${fontFamily}`)
+    const response = await fetch(url, { signal })
+
     fontData = await response.json()
   } catch (e) {
     console.error("Error fetching font", e)
@@ -31,15 +33,15 @@ export async function loadFont(fontFamily: string) {
   }
 }
 
-export async function fetchFontList() {
+export async function fetchFontList(signal?: AbortSignal) {
   const fonts: Font[] = []
 
   try {
-    const response = await fetch(
-      `${FONTS_SOURCE_API}?subsets=${SUBSETS.join(",")}&weights=${WEIGHTS.join(
-        ","
-      )}`
-    )
+    const url = new URL(FONTS_SOURCE_API)
+    url.searchParams.append("subsets", SUBSETS.join(","))
+    url.searchParams.append("weights", WEIGHTS.join(","))
+
+    const response = await fetch(url, { signal })
     const list: FontList = await response.json()
 
     fonts.push(
