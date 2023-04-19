@@ -1,6 +1,6 @@
 import { Button, CopyButton } from "@mantine/core"
 import cssBeauty from "cssbeautify"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
@@ -13,7 +13,7 @@ interface Props {
 const CopyBtn = ({ styles }: Props) => {
   const [selectedFont] = useStorage("selectedFont")
 
-  const [fontsCss, setFontsCss] = React.useState<string>("")
+  const [fontsCss, setFontsCss] = useState<string>("")
 
   useEffect(() => {
     if (!selectedFont) {
