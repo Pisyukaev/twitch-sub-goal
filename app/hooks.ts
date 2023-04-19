@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { getMeasureValue } from "~app/utils"
 
-import { fetchFontList, loadFont } from "./api/fonts"
+import { loadFont } from "./api/fonts"
 import {
   GOAL_WIDGET,
   GW_IMAGE,
@@ -13,7 +13,8 @@ import {
   LEFT_TEXT,
   RIGHT_TEXT
 } from "./constants"
-import type { Font, SelectorProps, StylesData } from "./types"
+import useFonts from "./hooks/useFonts"
+import type { SelectorProps, StylesData } from "./types"
 
 const useDebounce = <T extends (...args: any[]) => any>(
   callback: T,
@@ -46,33 +47,6 @@ export const useElements = () => {
     [RIGHT_TEXT]: rightText.current,
     [GW_PROGRESS_BAR]: progressBar.current
   }
-}
-
-export const useFonts = () => {
-  const [fonts, setFonts] = useState<Font[]>([])
-  const [, setSelectedFont] = useStorage("selectedFont")
-
-  useEffect(() => {
-    async function loadFonts() {
-      const fontList = await fetchFontList()
-
-      setFonts(fontList)
-    }
-
-    loadFonts()
-  }, [])
-
-  const setFont = (
-    selector: string,
-    fontData: { value: string; fontFaces: string[] }
-  ) => {
-    setSelectedFont((prev) => ({
-      ...prev,
-      [selector]: fontData
-    }))
-  }
-
-  return { fonts, setFont }
 }
 
 export const useDefaultStyles = () => {
@@ -117,7 +91,7 @@ export const useStyles = () => {
 
   const isUpdatedStyles = useRef(false)
 
-  const [selectedFont] = useStorage("selectedFont")
+  const { selectedFont } = useFonts()
 
   useEffect(() => {
     async function loadFonts() {

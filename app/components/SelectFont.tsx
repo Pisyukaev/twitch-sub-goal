@@ -2,7 +2,7 @@ import { Select } from "@mantine/core"
 import React, { useEffect, useState } from "react"
 
 import { fetchFontData } from "~app/api/fonts"
-import { useFonts } from "~app/hooks"
+import useFonts from "~app/hooks/useFonts"
 import type { SelectorProps, UpdateStylesFn } from "~app/types"
 import { createFontFacesCSS } from "~app/utils"
 
@@ -49,7 +49,7 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
   }, [currentFont])
 
   useEffect(() => {
-    const fontName = value.match(/'([^']+)'/)[1]
+    const fontName = value.match(/'([^']+)'/)?.[1]
     const initFont = fonts.find((el) => el.label === fontName)?.value
 
     setCurrentFont(initFont)
