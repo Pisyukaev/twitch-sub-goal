@@ -6,11 +6,11 @@ import {
   GW_PROGRESS_BAR,
   LEFT_TEXT,
   RIGHT_TEXT
-} from "./constants"
-import useStyles from "./hooks/useStyles"
-import type { SelectorProps } from "./types"
+} from "../constants"
+import type { SelectorProps } from "../types"
+import useStyles from "./useStyles"
 
-export const useData = () => {
+const useData = () => {
   const { styles } = useStyles()
   const data = useMemo<SelectorProps[]>(
     () => [
@@ -116,3 +116,5 @@ export const useData = () => {
 
   return data
 }
+
+export default useData

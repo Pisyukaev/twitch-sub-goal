@@ -1,7 +1,7 @@
 import { Stack } from "@mantine/core"
 import React from "react"
 
-import { useData } from "~app/hooks"
+import useData from "~app/hooks/useData"
 import useStyles from "~app/hooks/useStyles"
 
 import CopyBtn from "./CopyBtn"
