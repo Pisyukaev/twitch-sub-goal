@@ -29,9 +29,14 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
       return
     }
 
+    const abortController = new AbortController()
     const request = async () => {
       try {
-        const fontData = await loadFont(currentFont)
+        const fontData = await loadFont(currentFont, abortController.signal)
+        if (!fontData) {
+          return
+        }
+
         const fontFaces = createFontFacesCSS(fontData)
 
         setFont(selector, {
@@ -44,6 +49,8 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
     }
 
     request()
+
+    return () => abortController.abort()
   }, [currentFont])
 
   useEffect(() => {

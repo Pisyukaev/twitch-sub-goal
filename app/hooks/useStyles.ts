@@ -26,7 +26,11 @@ const useStyles = () => {
         .flatMap(({ font }) => font)
         .filter(Boolean)
 
-      await Promise.all(fonts.map((font) => loadFont(font)))
+      try {
+        await Promise.all(fonts.map((font) => loadFont(font)))
+      } catch (e) {
+        console.error("Error loading fonts", e)
+      }
     }
 
     if (selectedFont) {

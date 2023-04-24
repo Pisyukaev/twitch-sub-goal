@@ -10,13 +10,16 @@ const useFonts = () => {
   const [selectedFont, setSelectedFont] = useStorage("selectedFont")
 
   useEffect(() => {
+    const abortController = new AbortController()
     async function loadFonts() {
-      const fontList = await fetchFontList()
+      const fontList = await fetchFontList(abortController.signal)
 
       setFonts(fontList)
     }
 
     loadFonts()
+
+    return () => abortController.abort()
   }, [])
 
   const setFont = (
