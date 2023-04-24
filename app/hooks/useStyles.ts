@@ -23,7 +23,7 @@ const useStyles = () => {
   useEffect(() => {
     async function loadFonts() {
       const fonts = Object.values(selectedFont)
-        .flatMap(({ value }) => value)
+        .flatMap(({ font }) => font)
         .filter(Boolean)
 
       await Promise.all(fonts.map((font) => loadFont(font)))

@@ -21,7 +21,7 @@ const useFonts = () => {
 
   const setFont = (
     selector: string,
-    fontData: { value: string; fontFaces: string[] }
+    fontData: { font: Font; fontFaces: string[] }
   ) => {
     setSelectedFont((prev) => ({
       ...prev,

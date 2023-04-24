@@ -1,9 +1,9 @@
 import { Select } from "@mantine/core"
 import React, { useEffect, useState } from "react"
 
-import { fetchFontData } from "~app/api/fonts"
+import { loadFont } from "~app/api/fonts"
 import useFonts from "~app/hooks/useFonts"
-import type { SelectorProps, UpdateStylesFn } from "~app/types"
+import type { Font, SelectorProps, UpdateStylesFn } from "~app/types"
 import { createFontFacesCSS } from "~app/utils"
 
 interface Props {
@@ -15,15 +15,13 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
   const { fonts, setFont } = useFonts()
   const { label, selector, property, value } = selectedStyles
 
-  const [currentFont, setCurrentFont] = useState<string | null>(null)
+  const [currentFont, setCurrentFont] = useState<Font | null>(null)
 
   const handleChange = (newFont: string) => {
-    setCurrentFont(newFont)
-    onUpdate(
-      selector,
-      property,
-      `'${fonts.find(({ value }) => newFont === value).label}', sans-serif`
-    )
+    const selectedFont = fonts.find((el) => el.value === newFont)
+
+    setCurrentFont(selectedFont)
+    onUpdate(selector, property, `'${selectedFont.label}', sans-serif`)
   }
 
   useEffect(() => {
@@ -33,11 +31,11 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
 
     const request = async () => {
       try {
-        const fontData = await fetchFontData(currentFont)
+        const fontData = await loadFont(currentFont)
         const fontFaces = createFontFacesCSS(fontData)
 
         setFont(selector, {
-          value: currentFont,
+          font: currentFont,
           fontFaces: fontFaces
         })
       } catch (err) {
@@ -50,7 +48,7 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
 
   useEffect(() => {
     const fontName = value.match(/'([^']+)'/)?.[1]
-    const initFont = fonts.find((el) => el.label === fontName)?.value
+    const initFont = fonts.find((el) => el.label === fontName)
 
     setCurrentFont(initFont)
   }, [value, fonts])
@@ -58,7 +56,7 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
   return (
     <Select
       label={label}
-      value={currentFont}
+      value={currentFont?.value}
       data={fonts}
       disabled={fonts.length === 0}
       placeholder="Select font"

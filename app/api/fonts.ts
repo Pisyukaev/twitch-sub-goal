@@ -16,14 +16,14 @@ export async function fetchFontData(fontFamily: string, signal?: AbortSignal) {
   }
 }
 
-export async function loadFont(fontFamily: string) {
+export async function loadFont(font: Font) {
   for (const fontFace of document.fonts.values()) {
-    if (fontFace.family === fontFamily) {
+    if (fontFace.family === font.label) {
       return
     }
   }
 
-  const fontData = await fetchFontData(fontFamily)
+  const fontData = await fetchFontData(font.value)
   const fontFaces = prepareFont(fontData)
 
   try {
@@ -31,6 +31,8 @@ export async function loadFont(fontFamily: string) {
   } catch (e) {
     console.error("Error loading fonts in document", e)
   }
+
+  return fontData
 }
 
 export async function fetchFontList(signal?: AbortSignal) {
