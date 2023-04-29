@@ -5,7 +5,7 @@ import { prepareFont } from "~app/utils"
 export async function fetchFontData(
   fontFamily: string,
   signal?: AbortSignal
-): Promise<FontData> | undefined {
+): Promise<FontData | undefined> {
   try {
     const url = new URL(`${FONTS_SOURCE_API}/${fontFamily}`)
     const response = await fetch(url, { signal })
@@ -13,12 +13,13 @@ export async function fetchFontData(
     return await response.json()
   } catch (e) {
     console.error("Error fetching font", e)
-
-    return
   }
 }
 
-export async function loadFont(font: Font, signal?: AbortSignal) {
+export async function loadFont(
+  font: Font,
+  signal?: AbortSignal
+): Promise<FontData | undefined> {
   for (const fontFace of document.fonts.values()) {
     if (fontFace.family === font.label) {
       return
@@ -39,8 +40,6 @@ export async function loadFont(font: Font, signal?: AbortSignal) {
     return fontData
   } catch (e) {
     console.error("Error loading font", e)
-
-    return
   }
 }
 
