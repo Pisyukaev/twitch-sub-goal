@@ -5,8 +5,7 @@ export const GW_IMAGE = ".goal_widget__image.tw-image"
 export const GW_METADATA = ".goal_widget__metadata"
 export const LEFT_TEXT = ".goal_widget__metadata > div:first-child"
 export const RIGHT_TEXT = ".goal_widget__contributions"
-export const WIDGET_LINK =
-  ".Layout-sc-1xcs6mc-0.kpJXRJ.tw-combo-input > div > div > input"
+export const WIDGET_LINK = ".Layout-sc-1xcs6mc-0.kpJXRJ.tw-combo-input"
 export const K_REM = 3
 
 export const FONTS_SOURCE_API = "https://api.fontsource.org/v1/fonts"
