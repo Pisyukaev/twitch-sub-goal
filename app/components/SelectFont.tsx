@@ -21,7 +21,7 @@ const SelectFont = ({ selectedStyles, onUpdate }: Props) => {
     const selectedFont = fonts.find((el) => el.value === newFont)
 
     setCurrentFont(selectedFont)
-    onUpdate(selector, property, `'${selectedFont.label}', sans-serif`)
+    onUpdate(selector, property, `'${selectedFont.label}'`)
   }
 
   useEffect(() => {
