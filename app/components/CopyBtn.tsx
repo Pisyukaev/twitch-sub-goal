@@ -1,7 +1,8 @@
 import { Button, CopyButton } from "@mantine/core"
 import cssBeauty from "cssbeautify"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
+import useFonts from "~app/hooks/useFonts"
 import type { StylesData } from "~app/types"
 
 interface Props {
@@ -9,6 +10,23 @@ interface Props {
 }
 
 const CopyBtn = ({ styles }: Props) => {
+  const { selectedFont } = useFonts()
+
+  const [fontsCss, setFontsCss] = useState<string>("")
+
+  useEffect(() => {
+    if (!selectedFont) {
+      return
+    }
+
+    const fontToCss = Object.values(selectedFont)
+      .flatMap(({ fontFaces }) => fontFaces)
+      .filter(Boolean)
+      .join("\n")
+
+    setFontsCss(fontToCss)
+  }, [selectedFont])
+
   const cssText = Object.entries(styles).reduce((accum, [selector, st]) => {
     const stylesText = Object.entries(st).reduce((ac, [property, value]) => {
       ac.push(`${property}: ${value} !important`)
@@ -20,7 +38,7 @@ const CopyBtn = ({ styles }: Props) => {
   }, [])
 
   return (
-    <CopyButton value={cssBeauty(cssText.join(" "))}>
+    <CopyButton value={cssBeauty(fontsCss.concat(cssText.join(" ")))}>
       {({ copied, copy }) => (
         <Button color={copied ? "teal" : "blue"} onClick={copy}>
           {copied ? "Copied CSS" : "Copy CSS"}

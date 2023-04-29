@@ -1,10 +1,11 @@
-import { Stack, Tabs } from "@mantine/core"
+import { Flex, Tabs } from "@mantine/core"
 import React, { useState } from "react"
 
 import type { SelectorProps, UpdateStylesFn } from "~app/types"
 
 import InputImage from "./InputImage"
 import NumberProp from "./NumberProp"
+import SelectFont from "./SelectFont"
 import WidgetStyles from "./WidgetStyles"
 
 const getComponent = (componentName: string) => {
@@ -18,6 +19,8 @@ const getComponent = (componentName: string) => {
     case "InputImage":
       return InputImage
 
+    case "SelectFont":
+      return SelectFont
     default:
       return null
   }
@@ -38,7 +41,8 @@ function GoalTabs({ onUpdate, data }: Props) {
       defaultValue={group}
       orientation="vertical"
       variant="outline"
-      onTabChange={setGroup}>
+      onTabChange={setGroup}
+    >
       <Tabs.List>
         <Tabs.Tab value="goalWidget">Goal widget</Tabs.Tab>
         <Tabs.Tab value="border">Border</Tabs.Tab>
@@ -49,7 +53,14 @@ function GoalTabs({ onUpdate, data }: Props) {
       </Tabs.List>
 
       <Tabs.Panel value={group}>
-        <Stack align="center">
+        <Flex
+          pl="lg"
+          gap="md"
+          justify="center"
+          align="stretch"
+          direction="column"
+          wrap="wrap"
+        >
           {settings.map((el) => {
             const Widget = getComponent(el.componentName)
 
@@ -61,7 +72,7 @@ function GoalTabs({ onUpdate, data }: Props) {
               />
             )
           })}
-        </Stack>
+        </Flex>
       </Tabs.Panel>
     </Tabs>
   )
