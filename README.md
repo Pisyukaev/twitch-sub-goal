@@ -2,6 +2,15 @@
 
 <p align="center">This is a very simple extension to customize your twitch sub/follow goals!</p>
 
+ <p align="center">
+    <a href="https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim">
+        <img src="./.github/assets/chrome.png" alt="Availible on chrome web store" width="150">
+    </a>
+    <a href="https://addons.mozilla.org/ru/firefox/addon/twitch-sub-goal/">
+        <img src="./.github/assets/firefox.png" alt="Availible on Firefox Add-Ons" width="150">
+    </a>
+</p>
+
 ## How to use
 
 1. Install this extension from [chrome store](https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim)
