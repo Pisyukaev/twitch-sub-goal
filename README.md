@@ -1,30 +1,6 @@
 <h1 align="center">Twitch sub goal</h1>
 
-<p align="center">
-  <a aria-label="chrome web store" href="https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim">
-    <img alt="chrome web store" src="https://badgen.net/chrome-web-store/v/heapnplmfdahfoanhpibmpmkkhiignim"/>
-  </a>
-  <a aria-label="users" href="https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim">
-    <img alt="users" src="https://badgen.net/chrome-web-store/users/heapnplmfdahfoanhpibmpmkkhiignim"/>
-  </a>
-  <a aria-label="rating" >
-    <img alt="rating" src="https://badgen.net/chrome-web-store/rating/heapnplmfdahfoanhpibmpmkkhiignim"/>
-  </a>
-  <a aria-label="Twitch Stream" href="https://www.twitch.tv/pisyukaev">
-    <img alt="twitch" src="https://img.shields.io/twitch/status/pisyukaev?label=pisyukaev&logo=twitch"/>
-  </a>
-</p>
-
 <p align="center">This is a very simple extension to customize your twitch sub/follow goals!</p>
-
- <p align="center">
-    <a href="https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim">
-        <img src="./.github/assets/chrome.png" alt="Availible on chrome web store" width="150">
-    </a>
-    <a href="https://addons.mozilla.org/ru/firefox/addon/twitch-sub-goal/">
-        <img src="./.github/assets/firefox.png" alt="Availible on Firefox Add-Ons" width="150">
-    </a>
-</p>
 
 ## How to use
 
