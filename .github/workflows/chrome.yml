@@ -1,8 +1,6 @@
-name: "Submit to Web Store"
+name: "Submit to Chrome Web Store"
 on:
   push:
-    branches:
-      - master
     tags:
       - v*
 
@@ -31,11 +29,8 @@ jobs:
           cache: "pnpm"
       - name: Build Chrome artifact
         run: pnpm build --target=chrome-mv3 --zip
-      - name: Build Firefox artifact
-        run: pnpm build --target=firefox-mv2 --zip
       - name: Browser Platform Publish
         uses: PlasmoHQ/bpp@v3
         with:
           keys: ${{ secrets.SUBMIT_KEYS }}
           chrome-file: build/chrome-mv3-prod.zip
-          firefox-file: build/firefox-mv2-prod.zip
