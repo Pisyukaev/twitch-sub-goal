@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react"
 
 import { COLOR_FORMATS } from "~app/constants"
 import type { SelectorProps, UpdateStylesFn } from "~app/types"
+import { getColorFormat } from "~app/utils"
 
 type ColorFormat = ColorInputProps["format"]
 
@@ -14,8 +15,9 @@ interface Props {
 
 const ColorInput = ({ selectedStyles, onUpdate }: Props) => {
   const { selector, label, property, value } = selectedStyles
-
-  const [colorFormat, setColorFormat] = useState<ColorFormat>("hexa")
+  const [colorFormat, setColorFormat] = useState<ColorFormat>(
+    getColorFormat(value) // TODO: Fix this
+  )
   const [localColor, setLocalColor] = useState(value)
 
   const handleChange = useCallback((newColor: string | null) => {

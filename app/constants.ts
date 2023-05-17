@@ -13,7 +13,7 @@ export const SUBSETS = ["latin", "cyrillic"]
 export const WEIGHTS = ["400"]
 
 export const COLOR_FORMATS = [
-  { value: "hexa", label: "HEX" },
-  { value: "rgba", label: "RGB" },
-  { value: "hsla", label: "HSL" }
+  { value: "hexa", label: "HEXA" },
+  { value: "rgba", label: "RGBA" },
+  { value: "hsla", label: "HSLA" }
 ]
