@@ -1,10 +1,11 @@
 import { ColorInput as ColorPicker, Flex, Select } from "@mantine/core"
+import type { ColorInputProps } from "@mantine/core"
 import React, { useCallback, useEffect, useState } from "react"
 
-import type { ColorInputProps } from "@mantine/core"
+import { COLOR_FORMATS } from "~app/constants"
 import type { SelectorProps, UpdateStylesFn } from "~app/types"
 
-type ColorFormat = ColorInputProps['format']
+type ColorFormat = ColorInputProps["format"]
 
 interface Props {
   selectedStyles: SelectorProps
@@ -14,7 +15,7 @@ interface Props {
 const ColorInput = ({ selectedStyles, onUpdate }: Props) => {
   const { selector, label, property, value } = selectedStyles
 
-  const [colorFormat, setColorFormat] = useState<ColorFormat>('hex')
+  const [colorFormat, setColorFormat] = useState<ColorFormat>("hex")
   const [localColor, setLocalColor] = useState(value)
 
   const handleChange = useCallback((newColor: string | null) => {
@@ -40,14 +41,7 @@ const ColorInput = ({ selectedStyles, onUpdate }: Props) => {
         label="Color format"
         defaultValue={colorFormat}
         onChange={(value: ColorFormat) => setColorFormat(value)}
-        data={[
-          { value: 'hex', label: 'HEX' },
-          { value: 'hexa', label: 'HEXA' },
-          { value: 'rgb', label: 'RGB' },
-          { value: 'rgba', label: 'RGBA' },
-          { value: 'hsl', label: 'HSL' },
-          { value: 'hsla', label: 'HSLA' }
-        ]}
+        data={COLOR_FORMATS}
       />
     </Flex>
   )
