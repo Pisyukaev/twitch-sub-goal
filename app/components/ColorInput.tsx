@@ -15,7 +15,7 @@ interface Props {
 const ColorInput = ({ selectedStyles, onUpdate }: Props) => {
   const { selector, label, property, value } = selectedStyles
 
-  const [colorFormat, setColorFormat] = useState<ColorFormat>("hex")
+  const [colorFormat, setColorFormat] = useState<ColorFormat>("hexa")
   const [localColor, setLocalColor] = useState(value)
 
   const handleChange = useCallback((newColor: string | null) => {
