@@ -1,5 +1,22 @@
 import type { FontData, FontVariant } from "~app/types"
 
+export function getColorFormat(color: string) {
+  // rgba(0, 0, 0, 0)
+  const isRgb = color.startsWith("rgb")
+  if (isRgb) {
+    return "rgba"
+  }
+
+  // hsla(0, 0%, 0%, 0)
+  const isHsl = color.startsWith("hsl")
+  if (isHsl) {
+    return "hsla"
+  }
+
+  // #00000000
+  return "hexa"
+}
+
 export const getMeasureValue = (string: string) => {
   const regExp = /((?:\d*\.)?\d+)(\D+)/
   const [, numberValue, measureValue] = string.match(regExp)

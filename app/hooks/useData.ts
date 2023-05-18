@@ -20,7 +20,7 @@ const useData = () => {
         value: styles[GOAL_WIDGET]["background-color"],
         property: "background-color",
         group: "goalWidget",
-        componentName: "WidgetStyles"
+        componentName: "ColorInput"
       },
       {
         selector: GOAL_WIDGET,
@@ -28,7 +28,7 @@ const useData = () => {
         value: styles[GOAL_WIDGET]["border-color"],
         property: "border-color",
         group: "border",
-        componentName: "WidgetStyles"
+        componentName: "ColorInput"
       },
       {
         selector: GW_IMAGE,
@@ -60,7 +60,7 @@ const useData = () => {
         value: styles[GW_PROGRESS_BAR]["background-color"],
         property: "background-color",
         group: "progressBar",
-        componentName: "WidgetStyles"
+        componentName: "ColorInput"
       },
       {
         selector: LEFT_TEXT,
@@ -68,7 +68,7 @@ const useData = () => {
         value: styles[LEFT_TEXT]["color"],
         property: "color",
         group: "leftText",
-        componentName: "WidgetStyles"
+        componentName: "ColorInput"
       },
       {
         selector: LEFT_TEXT,
@@ -92,7 +92,7 @@ const useData = () => {
         value: styles[RIGHT_TEXT]["color"],
         property: "color",
         group: "rightText",
-        componentName: "WidgetStyles"
+        componentName: "ColorInput"
       },
       {
         selector: RIGHT_TEXT,

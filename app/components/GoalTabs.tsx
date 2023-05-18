@@ -6,12 +6,12 @@ import type { SelectorProps, UpdateStylesFn } from "~app/types"
 import InputImage from "./InputImage"
 import NumberProp from "./NumberProp"
 import SelectFont from "./SelectFont"
-import WidgetStyles from "./WidgetStyles"
+import ColorInput from "./ColorInput"
 
 const getComponent = (componentName: string) => {
   switch (componentName) {
-    case "WidgetStyles":
-      return WidgetStyles
+    case "ColorInput":
+      return ColorInput
 
     case "NumberProp":
       return NumberProp
