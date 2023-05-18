@@ -1,17 +1,20 @@
 import type { FontData, FontVariant } from "~app/types"
 
 export function getColorFormat(color: string) {
-  const isHex = color.startsWith("hex")
-  if (isHex) {
-    return "hexa"
+  // rgba(0, 0, 0, 0)
+  const isRgb = color.startsWith("rgb")
+  if (isRgb) {
+    return "rgba"
   }
 
+  // hsla(0, 0%, 0%, 0)
   const isHsl = color.startsWith("hsl")
   if (isHsl) {
     return "hsla"
   }
 
-  return "rgba"
+  // #00000000
+  return "hexa"
 }
 
 export const getMeasureValue = (string: string) => {
