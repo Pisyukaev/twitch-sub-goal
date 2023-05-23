@@ -1,13 +1,13 @@
 import { Button } from "@mantine/core"
-import React from "react"
+import React, { useContext } from "react"
 
-interface Props {
-  onClick: () => void
-}
+import StylesContext from "~app/context"
 
-const Reset = ({ onClick }: Props) => {
+const Reset = () => {
+  const { resetStyles } = useContext(StylesContext)
+
   return (
-    <Button color="red" onClick={onClick}>
+    <Button color="red" onClick={resetStyles}>
       Reset
     </Button>
   )

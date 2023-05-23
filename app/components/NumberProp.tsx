@@ -1,21 +1,22 @@
 import { NumberInput } from "@mantine/core"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 
-import type { SelectorProps, UpdateStylesFn } from "~app/types"
+import StylesContext from "~app/context"
+import type { SelectorProps } from "~app/types"
 import { getMeasureValue } from "~app/utils"
 
 interface Props {
   selectedStyles: SelectorProps
-  onUpdate: UpdateStylesFn
 }
 
-function NumberProp({ selectedStyles, onUpdate }: Props) {
+function NumberProp({ selectedStyles }: Props) {
+  const { updateStyles } = useContext(StylesContext)
   const { value, label, property, selector } = selectedStyles
   const { numberValue, measureValue } = getMeasureValue(value)
   const [number, setNumber] = useState(numberValue)
 
   const handleChange = (newNumber: number) => {
-    onUpdate(selector, property, `${newNumber}${measureValue}`)
+    updateStyles(selector, property, `${newNumber}${measureValue}`)
 
     setNumber(newNumber)
   }

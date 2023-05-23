@@ -1,6 +1,7 @@
 import { Stack } from "@mantine/core"
 import React from "react"
 
+import StylesContext from "~app/context"
 import useData from "~app/hooks/useData"
 import useStyles from "~app/hooks/useStyles"
 
@@ -12,12 +13,18 @@ const App = () => {
   const { styles, updateStyles, resetStyles } = useStyles()
   const data = useData()
 
+  if (!styles) {
+    return null
+  }
+
   return (
-    <Stack align="stretch" w="100%">
-      <GoalTabs onUpdate={updateStyles} data={data} />
-      <CopyBtn styles={styles} />
-      <Reset onClick={resetStyles} />
-    </Stack>
+    <StylesContext.Provider value={{ styles, updateStyles, resetStyles }}>
+      <Stack align="stretch" w="100%">
+        <GoalTabs data={data} />
+        <CopyBtn />
+        <Reset />
+      </Stack>
+    </StylesContext.Provider>
   )
 }
 

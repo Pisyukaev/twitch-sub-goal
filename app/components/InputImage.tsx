@@ -1,21 +1,22 @@
 import { Input } from "@mantine/core"
-import React from "react"
+import React, { useContext } from "react"
 import type { ChangeEvent } from "react"
 
-import type { SelectorProps, UpdateStylesFn } from "~app/types"
+import StylesContext from "~app/context"
+import type { SelectorProps } from "~app/types"
 
 interface Props {
   selectedStyles: SelectorProps
-  onUpdate: UpdateStylesFn
 }
 
-const InputImage = ({ selectedStyles, onUpdate }: Props) => {
+const InputImage = ({ selectedStyles }: Props) => {
+  const { updateStyles } = useContext(StylesContext)
   const { value, selector, property } = selectedStyles
 
   const handleChange = ({
     target: { value: imgSrc }
   }: ChangeEvent<HTMLInputElement>) =>
-    onUpdate(selector, property, `url(${imgSrc})`)
+    updateStyles(selector, property, `url(${imgSrc})`)
 
   const src = value.replaceAll(/url\(|\)/g, "")
 
