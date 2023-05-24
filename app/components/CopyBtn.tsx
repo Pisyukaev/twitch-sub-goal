@@ -1,13 +1,13 @@
 import { Button, CopyButton } from "@mantine/core"
 import cssBeauty from "cssbeautify"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
-import StylesContext from "~app/context"
-import useFonts from "~app/hooks/useFonts"
+import { useFonts } from "~app/hooks/useFonts"
+import { useStylesContext } from "~app/hooks/useStyles"
 
-const CopyBtn = () => {
+export const CopyBtn = () => {
   const { selectedFont } = useFonts()
-  const { styles } = useContext(StylesContext)
+  const { styles } = useStylesContext()
 
   const [fontsCss, setFontsCss] = useState<string>("")
 
@@ -44,5 +44,3 @@ const CopyBtn = () => {
     </CopyButton>
   )
 }
-
-export default CopyBtn

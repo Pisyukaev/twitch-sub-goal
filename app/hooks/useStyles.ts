@@ -1,16 +1,17 @@
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { loadFont } from "~app/api/fonts"
 import { K_REM } from "~app/constants"
+import { stylesContext } from "~app/context"
 import type { StylesData } from "~app/types"
 import { getMeasureValue } from "~app/utils"
 
-import useDebounce from "./useDebounce"
-import useDefaultStyles from "./useDefaultStyles"
-import useElements from "./useElements"
-import useFonts from "./useFonts"
+import { useDebounce } from "./useDebounce"
+import { useDefaultStyles } from "./useDefaultStyles"
+import { useElements } from "./useElements"
+import { useFonts } from "./useFonts"
 
 /**
  * @description This hook is used to initialize the styles of the elements
@@ -20,7 +21,7 @@ import useFonts from "./useFonts"
  */
 const useInitStyles = (initialStyles?: StylesData) => {
   // By the first render, the initial styles of the elements are stored
-  useStorage("customStyles", (value?: StylesData) => value ?? initialStyles)
+  useStorage<StylesData>("customStyles", (value) => value ?? initialStyles)
 
   // However, the actual state of the styles of the elements is undefined in the storage
   const [actualStyles, setActualStyles] = useStorage("customStyles")
@@ -31,11 +32,7 @@ const useInitStyles = (initialStyles?: StylesData) => {
   }
 }
 
-const useStyles = (): {
-  styles?: StylesData
-  resetStyles: () => void
-  updateStyles: (selector: string, prop: string, value: string) => void
-} => {
+export const useStyles = () => {
   const elements = useElements()
   const defaultStyles = useDefaultStyles()
   const { actualStyles, setActualStyles } = useInitStyles(defaultStyles)
@@ -49,8 +46,8 @@ const useStyles = (): {
 
       try {
         await Promise.all(fonts.map((font) => loadFont(font)))
-      } catch (e) {
-        console.error("Error loading fonts", e)
+      } catch (err) {
+        console.error("Error loading fonts", err)
       }
     }
 
@@ -63,9 +60,9 @@ const useStyles = (): {
 
   const updElementStyles = (selector: string, prop: string, value: string) => {
     let newValue = value
+
     if (value.match("rem")) {
       const { numberValue, measureValue } = getMeasureValue(value)
-
       newValue = `${numberValue / K_REM}${measureValue}`
     }
 
@@ -103,7 +100,9 @@ const useStyles = (): {
     styles: actualStyles,
     resetStyles,
     updateStyles
-  }
+  } as const
 }
 
-export default useStyles
+export const useStylesContext = () => {
+  return useContext(stylesContext)
+}

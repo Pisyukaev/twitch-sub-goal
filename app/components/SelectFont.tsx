@@ -1,9 +1,9 @@
 import { Select } from "@mantine/core"
-import React, { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { loadFont } from "~app/api/fonts"
-import StylesContext from "~app/context"
-import useFonts from "~app/hooks/useFonts"
+import { useFonts } from "~app/hooks/useFonts"
+import { useStylesContext } from "~app/hooks/useStyles"
 import type { Font, SelectorProps } from "~app/types"
 import { createFontFacesCSS } from "~app/utils"
 
@@ -11,8 +11,8 @@ interface Props {
   selectedStyles: SelectorProps
 }
 
-const SelectFont = ({ selectedStyles }: Props) => {
-  const { updateStyles } = useContext(StylesContext)
+export const SelectFont = ({ selectedStyles }: Props) => {
+  const { updateStyles } = useStylesContext()
   const { fonts, setFont } = useFonts()
   const { label, selector, property, value } = selectedStyles
 
@@ -20,6 +20,7 @@ const SelectFont = ({ selectedStyles }: Props) => {
 
   const handleChange = (newFont: string) => {
     const selectedFont = fonts.find((el) => el.value === newFont)
+    if (!selectedFont) return
 
     setCurrentFont(selectedFont)
     updateStyles(selector, property, `'${selectedFont.label}'`)
@@ -73,5 +74,3 @@ const SelectFont = ({ selectedStyles }: Props) => {
     />
   )
 }
-
-export default SelectFont

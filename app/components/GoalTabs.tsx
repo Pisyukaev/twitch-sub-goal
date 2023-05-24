@@ -3,10 +3,10 @@ import React, { useState } from "react"
 
 import type { SelectorProps } from "~app/types"
 
-import ColorInput from "./ColorInput"
-import InputImage from "./InputImage"
-import NumberProp from "./NumberProp"
-import SelectFont from "./SelectFont"
+import {ColorInput} from "./ColorInput"
+import {InputImage} from "./InputImage"
+import {NumberProp} from "./NumberProp"
+import {SelectFont} from "./SelectFont"
 
 const getComponent = (componentName: string) => {
   switch (componentName) {
@@ -30,7 +30,7 @@ interface Props {
   data: SelectorProps[]
 }
 
-function GoalTabs({ data }: Props) {
+export const GoalTabs = ({ data }: Props) => {
   const [group, setGroup] = useState("goalWidget")
 
   const settings = data.filter((el) => el.group === group)
@@ -72,6 +72,4 @@ function GoalTabs({ data }: Props) {
       </Tabs.Panel>
     </Tabs>
   )
-}
-
-export default GoalTabs
+};

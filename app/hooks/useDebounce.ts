@@ -1,6 +1,6 @@
 import { useRef } from "react"
 
-const useDebounce = <T extends (...args: any[]) => any>(
+export const useDebounce = <T extends (...args: any[]) => any>(
   callback: T,
   delay: number
 ) => {
@@ -14,5 +14,3 @@ const useDebounce = <T extends (...args: any[]) => any>(
     timeout.current = setTimeout(() => callback(...args), delay)
   }
 }
-
-export default useDebounce

@@ -25,5 +25,3 @@ export const useElements = () => {
     [GW_PROGRESS_BAR]: progressBar.current
   }
 }
-
-export default useElements

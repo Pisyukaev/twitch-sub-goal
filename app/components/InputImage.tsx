@@ -1,16 +1,15 @@
 import { Input } from "@mantine/core"
-import React, { useContext } from "react"
 import type { ChangeEvent } from "react"
 
-import StylesContext from "~app/context"
+import { useStylesContext } from "~app/hooks/useStyles"
 import type { SelectorProps } from "~app/types"
 
 interface Props {
   selectedStyles: SelectorProps
 }
 
-const InputImage = ({ selectedStyles }: Props) => {
-  const { updateStyles } = useContext(StylesContext)
+export const InputImage = ({ selectedStyles }: Props) => {
+  const { updateStyles } = useStylesContext()
   const { value, selector, property } = selectedStyles
 
   const handleChange = ({
@@ -26,5 +25,3 @@ const InputImage = ({ selectedStyles }: Props) => {
     </Input.Wrapper>
   )
 }
-
-export default InputImage
