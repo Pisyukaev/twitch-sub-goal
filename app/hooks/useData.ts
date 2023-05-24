@@ -7,12 +7,13 @@ import {
   GW_IMAGE,
   GW_PROGRESS_BAR,
   LEFT_TEXT,
-  RIGHT_TEXT
+  RIGHT_TEXT,
+  STORAGE_KEYS
 } from "../constants"
 import type { SelectorProps } from "../types"
 
 export const useData = () => {
-  const [styles] = useStorage("customStyles")
+  const [styles] = useStorage(STORAGE_KEYS.CUSTOM_STYLES)
 
   const data = useMemo<SelectorProps[]>(() => {
     if (!styles) return []

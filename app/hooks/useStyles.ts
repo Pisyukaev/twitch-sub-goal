@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react"
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { loadFont } from "~app/api/fonts"
-import { K_REM } from "~app/constants"
+import { K_REM, STORAGE_KEYS } from "~app/constants"
 import { stylesContext } from "~app/context"
 import type { StylesData } from "~app/types"
 import { getMeasureValue } from "~app/utils"
@@ -21,10 +21,13 @@ import { useFonts } from "./useFonts"
  */
 const useInitStyles = (initialStyles?: StylesData) => {
   // By the first render, the initial styles of the elements are stored
-  useStorage<StylesData>("customStyles", (value) => value ?? initialStyles)
+  useStorage<StylesData>(
+    STORAGE_KEYS.CUSTOM_STYLES,
+    (value) => value ?? initialStyles
+  )
 
   // However, the actual state of the styles of the elements is undefined in the storage
-  const [actualStyles, setActualStyles] = useStorage("customStyles")
+  const [actualStyles, setActualStyles] = useStorage(STORAGE_KEYS.CUSTOM_STYLES)
 
   return {
     actualStyles,

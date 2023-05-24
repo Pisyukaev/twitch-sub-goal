@@ -7,7 +7,8 @@ import {
   GW_IMAGE,
   GW_PROGRESS_BAR,
   LEFT_TEXT,
-  RIGHT_TEXT
+  RIGHT_TEXT,
+  STORAGE_KEYS
 } from "~app/constants"
 import type { StylesData } from "~app/types"
 
@@ -42,7 +43,7 @@ export const useDefaultStyles = () => {
   })
 
   const [defaultStyles] = useStorage<StylesData>(
-    "defaultStyles",
+    STORAGE_KEYS.DEFAULT_STYLES,
     (value) => value ?? styles.current
   )
 
