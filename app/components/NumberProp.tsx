@@ -1,5 +1,5 @@
 import { NumberInput } from "@mantine/core"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useStylesContext } from "~app/hooks/useStyles"
 import type { SelectorProps } from "~app/types"
@@ -20,6 +20,12 @@ export const NumberProp = ({
     updateStyles(selector, property, `${newNumber}${measureValue}`)
     setNumber(newNumber)
   }
+
+  useEffect(() => {
+    const { numberValue } = getMeasureValue(value)
+
+    setNumber(numberValue)
+  }, [value])
 
   return (
     <NumberInput

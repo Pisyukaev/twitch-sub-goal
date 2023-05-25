@@ -65,7 +65,7 @@ export const SelectFont = ({ selectedStyles }: Props) => {
   return (
     <Select
       label={label}
-      value={currentFont?.value}
+      value={currentFont?.value ?? null}
       data={fonts}
       disabled={fonts.length === 0}
       placeholder="Select font"
