@@ -27,7 +27,9 @@ const useInitStyles = (initialStyles?: StylesData) => {
   )
 
   // However, the actual state of the styles of the elements is undefined in the storage
-  const [actualStyles, setActualStyles] = useStorage(STORAGE_KEYS.CUSTOM_STYLES)
+  const [actualStyles, setActualStyles] = useStorage<StylesData | undefined>(
+    STORAGE_KEYS.CUSTOM_STYLES
+  )
 
   return {
     actualStyles,
@@ -103,7 +105,7 @@ export const useStyles = () => {
     styles: actualStyles,
     resetStyles,
     updateStyles
-  } as const
+  }
 }
 
 export const useStylesContext = () => {

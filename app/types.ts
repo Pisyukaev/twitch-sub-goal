@@ -83,3 +83,10 @@ export interface FontData {
   type: string
   variants: FontVariant
 }
+
+export interface SelectedFonts {
+  [key: string]: {
+    font: Font
+    fontFaces: string[]
+  }
+}

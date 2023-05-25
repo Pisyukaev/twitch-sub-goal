@@ -10,10 +10,12 @@ import {
   RIGHT_TEXT,
   STORAGE_KEYS
 } from "../constants"
-import type { SelectorProps } from "../types"
+import type { SelectorProps, StylesData } from "../types"
 
 export const useData = () => {
-  const [styles] = useStorage(STORAGE_KEYS.CUSTOM_STYLES)
+  const [styles] = useStorage<StylesData | undefined>(
+    STORAGE_KEYS.CUSTOM_STYLES
+  )
 
   const data = useMemo<SelectorProps[]>(() => {
     if (!styles) return []
