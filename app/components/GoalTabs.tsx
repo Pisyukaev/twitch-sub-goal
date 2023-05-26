@@ -1,12 +1,12 @@
 import { Flex, Tabs } from "@mantine/core"
 import React, { useState } from "react"
 
-import type { SelectorProps, UpdateStylesFn } from "~app/types"
+import type { SelectorProps } from "~app/types"
 
-import InputImage from "./InputImage"
-import NumberProp from "./NumberProp"
-import SelectFont from "./SelectFont"
-import ColorInput from "./ColorInput"
+import {ColorInput} from "./ColorInput"
+import {InputImage} from "./InputImage"
+import {NumberProp} from "./NumberProp"
+import {SelectFont} from "./SelectFont"
 
 const getComponent = (componentName: string) => {
   switch (componentName) {
@@ -27,11 +27,10 @@ const getComponent = (componentName: string) => {
 }
 
 interface Props {
-  onUpdate: UpdateStylesFn
   data: SelectorProps[]
 }
 
-function GoalTabs({ onUpdate, data }: Props) {
+export const GoalTabs = ({ data }: Props) => {
   const [group, setGroup] = useState("goalWidget")
 
   const settings = data.filter((el) => el.group === group)
@@ -41,8 +40,7 @@ function GoalTabs({ onUpdate, data }: Props) {
       defaultValue={group}
       orientation="vertical"
       variant="outline"
-      onTabChange={setGroup}
-    >
+      onTabChange={setGroup}>
       <Tabs.List>
         <Tabs.Tab value="goalWidget">Goal widget</Tabs.Tab>
         <Tabs.Tab value="border">Border</Tabs.Tab>
@@ -59,8 +57,7 @@ function GoalTabs({ onUpdate, data }: Props) {
           justify="center"
           align="stretch"
           direction="column"
-          wrap="wrap"
-        >
+          wrap="wrap">
           {settings.map((el) => {
             const Widget = getComponent(el.componentName)
 
@@ -68,7 +65,6 @@ function GoalTabs({ onUpdate, data }: Props) {
               <Widget
                 key={`${el.selector}-${el.property}`}
                 selectedStyles={el}
-                onUpdate={onUpdate}
               />
             )
           })}
@@ -76,6 +72,4 @@ function GoalTabs({ onUpdate, data }: Props) {
       </Tabs.Panel>
     </Tabs>
   )
-}
-
-export default GoalTabs
+};

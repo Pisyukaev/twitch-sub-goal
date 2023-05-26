@@ -1,16 +1,13 @@
 import { Button } from "@mantine/core"
-import React from "react"
 
-interface Props {
-  onClick: () => void
-}
+import { useStylesContext } from "~app/hooks/useStyles"
 
-const Reset = ({ onClick }: Props) => {
+export const Reset = () => {
+  const { resetStyles } = useStylesContext()
+
   return (
-    <Button color="red" onClick={onClick}>
+    <Button color="red" onClick={resetStyles}>
       Reset
     </Button>
   )
 }
-
-export default Reset

@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
   emotionCache?: EmotionCache
 }
 
-export function ThemeProvider({ emotionCache, children }: Props) {
+export const ThemeProvider = ({ emotionCache, children }: Props) => {
   const [theme] = useLocalStorage<ColorScheme>({
     key: "twilight.theme",
     defaultValue: "dark",
@@ -26,4 +26,4 @@ export function ThemeProvider({ emotionCache, children }: Props) {
       {children}
     </MantineProvider>
   )
-}
+};

@@ -5,7 +5,7 @@ import type {
   PlasmoMountShadowHost
 } from "plasmo"
 
-import App from "~app/components/App"
+import { App } from "~app/components/App"
 import { DIALOG_CONTENT, WIDGET_LINK } from "~app/constants"
 import { ThemeProvider } from "~theme"
 
@@ -34,16 +34,14 @@ export const mountShadowHost: PlasmoMountShadowHost = ({
 }) => {
   if (!anchor.element) {
     observer.disconnect()
-
     return
   }
 
   const dialogContent = document.querySelector(DIALOG_CONTENT)
-
   dialogContent.appendChild(shadowHost)
 }
 
-function PlasmoInline() {
+const PlasmoInline = () => {
   return (
     <ThemeProvider emotionCache={styleCache}>
       <App />

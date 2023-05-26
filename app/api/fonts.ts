@@ -2,24 +2,24 @@ import { FONTS_SOURCE_API, SUBSETS, WEIGHTS } from "~app/constants"
 import type { Font, FontData, FontList } from "~app/types"
 import { prepareFont } from "~app/utils"
 
-export async function fetchFontData(
+export const fetchFontData = async (
   fontFamily: string,
   signal?: AbortSignal
-): Promise<FontData | undefined> {
+): Promise<FontData | undefined> => {
   try {
     const url = new URL(`${FONTS_SOURCE_API}/${fontFamily}`)
     const response = await fetch(url, { signal })
 
     return await response.json()
-  } catch (e) {
-    console.error("Error fetching font", e)
+  } catch (err) {
+    console.error("Error fetching font", err)
   }
 }
 
-export async function loadFont(
+export const loadFont = async (
   font: Font,
   signal?: AbortSignal
-): Promise<FontData | undefined> {
+): Promise<FontData | undefined> => {
   for (const fontFace of document.fonts.values()) {
     if (fontFace.family === font.label) {
       return
@@ -38,12 +38,12 @@ export async function loadFont(
     await Promise.all(fontFaces.map((fontFace) => fontFace.load()))
 
     return fontData
-  } catch (e) {
-    console.error("Error loading font", e)
+  } catch (err) {
+    console.error("Error loading font", err)
   }
 }
 
-export async function fetchFontList(signal?: AbortSignal) {
+export const fetchFontList = async (signal?: AbortSignal) => {
   const fonts: Font[] = []
 
   try {
@@ -60,8 +60,8 @@ export async function fetchFontList(signal?: AbortSignal) {
         label: family
       }))
     )
-  } catch (e) {
-    console.warn("Error fetching fonts", e)
+  } catch (err) {
+    console.warn("Error fetching fonts", err)
   } finally {
     return fonts
   }

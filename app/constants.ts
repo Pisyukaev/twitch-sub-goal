@@ -12,6 +12,12 @@ export const FONTS_SOURCE_API = "https://api.fontsource.org/v1/fonts"
 export const SUBSETS = ["latin", "cyrillic"]
 export const WEIGHTS = ["400"]
 
+export const STORAGE_KEYS = {
+  CUSTOM_STYLES: "customStyles",
+  DEFAULT_STYLES: "defaultStyles",
+  SELECTED_FONT: "selectedFont"
+}
+
 export const COLOR_FORMATS = [
   { value: "hexa", label: "HEXA" },
   { value: "rgba", label: "RGBA" },

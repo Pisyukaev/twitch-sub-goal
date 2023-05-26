@@ -7,16 +7,17 @@ import {
   GW_IMAGE,
   GW_PROGRESS_BAR,
   LEFT_TEXT,
-  RIGHT_TEXT
+  RIGHT_TEXT,
+  STORAGE_KEYS
 } from "~app/constants"
 import type { StylesData } from "~app/types"
 
-import useElements from "./useElements"
+import { useElements } from "./useElements"
 
-const useDefaultStyles = () => {
+export const useDefaultStyles = () => {
   const elements = useElements()
 
-  const styles = useRef({
+  const styles = useRef<StylesData>({
     [GOAL_WIDGET]: {
       "background-color": elements[GOAL_WIDGET].style.backgroundColor,
       "border-color": elements[GOAL_WIDGET].style.borderColor,
@@ -39,14 +40,12 @@ const useDefaultStyles = () => {
     [GW_IMAGE]: {
       content: `url(${elements[GW_IMAGE].src})`
     }
-  } as StylesData)
+  })
 
-  const [defaultStyles] = useStorage(
-    "defaultStyles",
-    (value?: StylesData) => value ?? styles.current
+  const [defaultStyles] = useStorage<StylesData>(
+    STORAGE_KEYS.DEFAULT_STYLES,
+    (value) => value ?? styles.current
   )
 
   return defaultStyles
 }
-
-export default useDefaultStyles

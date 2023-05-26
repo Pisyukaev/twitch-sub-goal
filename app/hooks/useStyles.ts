@@ -1,23 +1,46 @@
-import { useEffect, useRef } from "react"
+import { useContext, useEffect } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
 import { loadFont } from "~app/api/fonts"
-import { K_REM } from "~app/constants"
+import { K_REM, STORAGE_KEYS } from "~app/constants"
+import { stylesContext } from "~app/context"
 import type { StylesData } from "~app/types"
 import { getMeasureValue } from "~app/utils"
 
-import useDebounce from "./useDebounce"
-import useDefaultStyles from "./useDefaultStyles"
-import useElements from "./useElements"
-import useFonts from "./useFonts"
+import { useDebounce } from "./useDebounce"
+import { useDefaultStyles } from "./useDefaultStyles"
+import { useElements } from "./useElements"
+import { useFonts } from "./useFonts"
 
-const useStyles = () => {
+/**
+ * @description This hook is used to initialize the styles of the elements
+ * @param initialStyles - The initial styles of the elements
+ * @returns The initial styles of the elements, the actual styles of the elements and a function to
+ * update the actual styles of the elements
+ */
+const useInitStyles = (initialStyles?: StylesData) => {
+  // By the first render, the initial styles of the elements are stored
+  useStorage<StylesData>(
+    STORAGE_KEYS.CUSTOM_STYLES,
+    (value) => value ?? initialStyles
+  )
+
+  // However, the actual state of the styles of the elements is undefined in the storage
+  const [actualStyles, setActualStyles] = useStorage<StylesData | undefined>(
+    STORAGE_KEYS.CUSTOM_STYLES
+  )
+
+  return {
+    actualStyles,
+    setActualStyles
+  }
+}
+
+export const useStyles = () => {
   const elements = useElements()
   const defaultStyles = useDefaultStyles()
-
-  const isUpdatedStyles = useRef(false)
-
+  const { actualStyles, setActualStyles } = useInitStyles(defaultStyles)
   const { selectedFont } = useFonts()
 
   useEffect(() => {
@@ -28,8 +51,8 @@ const useStyles = () => {
 
       try {
         await Promise.all(fonts.map((font) => loadFont(font)))
-      } catch (e) {
-        console.error("Error loading fonts", e)
+      } catch (err) {
+        console.error("Error loading fonts", err)
       }
     }
 
@@ -38,25 +61,13 @@ const useStyles = () => {
     }
   }, [selectedFont])
 
-  const [styles, setStyles] = useStorage("customStyles", (value?: StylesData) =>
-    value
-      ? Object.keys(defaultStyles).reduce(
-          (accum, selector) => ({
-            ...accum,
-            [selector]: { ...defaultStyles[selector], ...value[selector] }
-          }),
-          defaultStyles
-        )
-      : defaultStyles
-  )
-
-  const debouncedSetStyles = useDebounce(setStyles, 200)
+  const debouncedSetStyles = useDebounce(setActualStyles, 200)
 
   const updElementStyles = (selector: string, prop: string, value: string) => {
     let newValue = value
+
     if (value.match("rem")) {
       const { numberValue, measureValue } = getMeasureValue(value)
-
       newValue = `${numberValue / K_REM}${measureValue}`
     }
 
@@ -64,38 +75,39 @@ const useStyles = () => {
   }
 
   const updateStyles = (selector: string, prop: string, value: string) => {
+    if (!actualStyles) {
+      return
+    }
+
     debouncedSetStyles({
-      ...styles,
-      [selector]: { ...styles[selector], [prop]: value }
+      ...actualStyles,
+      [selector]: { ...actualStyles[selector], [prop]: value }
     })
 
     updElementStyles(selector, prop, value)
   }
 
   useEffect(() => {
-    if (isUpdatedStyles.current) {
+    if (!actualStyles) {
       return
     }
 
-    for (const selector in styles) {
-      for (const prop in styles[selector]) {
-        updElementStyles(selector, prop, styles[selector][prop])
+    for (const selector in actualStyles) {
+      for (const prop in actualStyles[selector]) {
+        updElementStyles(selector, prop, actualStyles[selector][prop])
       }
     }
+  }, [actualStyles])
 
-    isUpdatedStyles.current = styles !== defaultStyles
-  }, [styles])
-
-  const resetStyles = () => {
-    setStyles(defaultStyles)
-    isUpdatedStyles.current = false
-  }
+  const resetStyles = () => setActualStyles(defaultStyles)
 
   return {
-    styles,
+    styles: actualStyles,
     resetStyles,
     updateStyles
   }
 }
 
-export default useStyles
+export const useStylesContext = () => {
+  return useContext(stylesContext)
+}

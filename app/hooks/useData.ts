@@ -1,19 +1,26 @@
 import { useMemo } from "react"
 
+import { useStorage } from "@plasmohq/storage/hook"
+
 import {
   GOAL_WIDGET,
   GW_IMAGE,
   GW_PROGRESS_BAR,
   LEFT_TEXT,
-  RIGHT_TEXT
+  RIGHT_TEXT,
+  STORAGE_KEYS
 } from "../constants"
-import type { SelectorProps } from "../types"
-import useStyles from "./useStyles"
+import type { SelectorProps, StylesData } from "../types"
 
-const useData = () => {
-  const { styles } = useStyles()
-  const data = useMemo<SelectorProps[]>(
-    () => [
+export const useData = () => {
+  const [styles] = useStorage<StylesData | undefined>(
+    STORAGE_KEYS.CUSTOM_STYLES
+  )
+
+  const data = useMemo<SelectorProps[]>(() => {
+    if (!styles) return []
+
+    return [
       {
         selector: GOAL_WIDGET,
         label: "Background",
@@ -110,11 +117,8 @@ const useData = () => {
         group: "rightText",
         componentName: "NumberProp"
       }
-    ],
-    [styles]
-  )
+    ]
+  }, [styles])
 
   return data
 }
-
-export default useData
