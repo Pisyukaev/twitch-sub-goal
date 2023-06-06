@@ -1,6 +1,8 @@
-import { createContext } from "react"
+import { PropsWithChildren, createContext } from "react"
 
-import type { StylesData } from "./types"
+import { useFonts } from "./hooks/useFonts"
+import { useStyles } from "./hooks/useStyles"
+import type { Font, SelectedFonts, StylesData } from "./types"
 
 export const stylesContext = createContext<{
   styles: StylesData
@@ -8,4 +10,32 @@ export const stylesContext = createContext<{
   resetStyles: () => void
 }>(null)
 
-export const StylesProvider = stylesContext.Provider
+export const fontContext = createContext<{
+  fonts: Font[]
+  setFont: (
+    selector: string,
+    fontData: {
+      font: Font
+      fontFaces: string[]
+    }
+  ) => void
+  selectedFont: SelectedFonts
+}>(null)
+
+const StylesProvider = stylesContext.Provider
+const FontProvider = fontContext.Provider
+
+export const WidgetProvider = ({ children }: PropsWithChildren) => {
+  const stylesValue = useStyles()
+  const fontValue = useFonts()
+
+  if (!stylesValue.styles) {
+    return null
+  }
+
+  return (
+    <FontProvider value={fontValue}>
+      <StylesProvider value={stylesValue}>{children}</StylesProvider>
+    </FontProvider>
+  )
+}
