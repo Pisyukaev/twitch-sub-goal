@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { loadFont } from "~app/api/fonts"
 import { K_REM, STORAGE_KEYS } from "~app/constants"
 import { stylesContext } from "~app/context"
 import type { StylesData } from "~app/types"
@@ -11,7 +10,6 @@ import { getMeasureValue } from "~app/utils"
 import { useDebounce } from "./useDebounce"
 import { useDefaultStyles } from "./useDefaultStyles"
 import { useElements } from "./useElements"
-import { useFonts } from "./useFonts"
 
 /**
  * @description This hook is used to initialize the styles of the elements
@@ -41,25 +39,6 @@ export const useStyles = () => {
   const elements = useElements()
   const defaultStyles = useDefaultStyles()
   const { actualStyles, setActualStyles } = useInitStyles(defaultStyles)
-  const { selectedFont } = useFonts()
-
-  useEffect(() => {
-    async function loadFonts() {
-      const fonts = Object.values(selectedFont)
-        .flatMap(({ font }) => font)
-        .filter(Boolean)
-
-      try {
-        await Promise.all(fonts.map((font) => loadFont(font)))
-      } catch (err) {
-        console.error("Error loading fonts", err)
-      }
-    }
-
-    if (selectedFont) {
-      loadFonts()
-    }
-  }, [selectedFont])
 
   const debouncedSetStyles = useDebounce(setActualStyles, 200)
 
