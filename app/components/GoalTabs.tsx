@@ -1,12 +1,12 @@
 import { Flex, Tabs } from "@mantine/core"
 import React, { useState } from "react"
 
-import type { SelectorProps } from "~app/types"
+import { useData } from "~app/hooks/useData"
 
-import {ColorInput} from "./ColorInput"
-import {InputImage} from "./InputImage"
-import {NumberProp} from "./NumberProp"
-import {SelectFont} from "./SelectFont"
+import { ColorInput } from "./ColorInput"
+import { InputImage } from "./InputImage"
+import { NumberProp } from "./NumberProp"
+import { SelectFont } from "./SelectFont"
 
 const getComponent = (componentName: string) => {
   switch (componentName) {
@@ -26,11 +26,9 @@ const getComponent = (componentName: string) => {
   }
 }
 
-interface Props {
-  data: SelectorProps[]
-}
+export const GoalTabs = () => {
+  const data = useData()
 
-export const GoalTabs = ({ data }: Props) => {
   const [group, setGroup] = useState("goalWidget")
 
   const settings = data.filter((el) => el.group === group)
@@ -72,4 +70,4 @@ export const GoalTabs = ({ data }: Props) => {
       </Tabs.Panel>
     </Tabs>
   )
-};
+}
