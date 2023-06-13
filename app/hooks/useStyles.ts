@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { K_REM, STORAGE_KEYS } from "~app/constants"
+import { K_REM, LEFT_TEXT, RIGHT_TEXT, STORAGE_KEYS } from "~app/constants"
 import { stylesContext } from "~app/context"
 import type { StylesData } from "~app/types"
 import { getMeasureValue } from "~app/utils"
@@ -19,10 +19,31 @@ import { useElements } from "./useElements"
  */
 const useInitStyles = (initialStyles?: StylesData) => {
   // By the first render, the initial styles of the elements are stored
-  useStorage<StylesData>(
-    STORAGE_KEYS.CUSTOM_STYLES,
-    (value) => value ?? initialStyles
-  )
+  useStorage<StylesData>(STORAGE_KEYS.CUSTOM_STYLES, (value) => {
+    if (!value) {
+      return initialStyles
+    }
+
+    // backward compatibility px => rem
+    // TODO: remove this in the next version
+    const newValue = {
+      ...value,
+      [LEFT_TEXT]: {
+        ...value[LEFT_TEXT],
+        "font-size": value[LEFT_TEXT]["font-size"].endsWith("px")
+          ? "4rem"
+          : value[LEFT_TEXT]["font-size"]
+      },
+      [RIGHT_TEXT]: {
+        ...value[RIGHT_TEXT],
+        "font-size": value[RIGHT_TEXT]["font-size"].endsWith("px")
+          ? "4rem"
+          : value[RIGHT_TEXT]["font-size"]
+      }
+    }
+
+    return newValue
+  })
 
   // However, the actual state of the styles of the elements is undefined in the storage
   const [actualStyles, setActualStyles] = useStorage<StylesData | undefined>(
