@@ -10,7 +10,7 @@ import type { Font, SelectedFonts } from "~app/types"
 
 export const useFonts = () => {
   const [fonts, setFonts] = useState<Font[]>([])
-  const [selectedFont, setSelectedFont] = useStorage<SelectedFonts | undefined>(
+  const [selectedFont, setSelectedFont, { remove }] = useStorage<SelectedFonts>(
     STORAGE_KEYS.SELECTED_FONT
   )
 
@@ -55,9 +55,7 @@ export const useFonts = () => {
     }))
   }
 
-  const resetSelectedFont = () => setSelectedFont(undefined)
-
-  return { fonts, setFont, selectedFont, resetSelectedFont }
+  return { fonts, setFont, selectedFont, resetSelectedFont: remove }
 }
 
 export const useFontsContext = () => {
