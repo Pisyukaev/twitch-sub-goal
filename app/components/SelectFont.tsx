@@ -59,13 +59,13 @@ export const SelectFont = ({ selectedStyles }: Props) => {
     const fontName = value.match(/'([^']+)'/)?.[1]
     const initFont = fonts.find((el) => el.label === fontName)
 
-    setCurrentFont(initFont)
+    setCurrentFont(initFont ?? null)
   }, [value, fonts])
 
   return (
     <Select
       label={label}
-      value={currentFont?.value}
+      value={currentFont ? currentFont.value : null}
       data={fonts}
       disabled={fonts.length === 0}
       placeholder="Select font"
