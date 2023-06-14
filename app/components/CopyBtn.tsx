@@ -12,11 +12,7 @@ export const CopyBtn = () => {
   const [fontsCss, setFontsCss] = useState<string>("")
 
   useEffect(() => {
-    if (!selectedFont) {
-      return
-    }
-
-    const fontToCss = Object.values(selectedFont)
+    const fontToCss = Object.values(selectedFont ?? {})
       .flatMap(({ fontFaces }) => fontFaces)
       .filter(Boolean)
       .join("\n")
