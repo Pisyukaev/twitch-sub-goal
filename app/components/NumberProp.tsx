@@ -16,7 +16,11 @@ export const NumberProp = ({
   const { numberValue, measureValue } = getMeasureValue(value)
   const [number, setNumber] = useState(numberValue)
 
-  const handleChange = (newNumber: number) => {
+  const handleChange = (newNumber?: number) => {
+    if (!newNumber) {
+      return
+    }
+
     updateStyles(selector, property, `${newNumber}${measureValue}`)
     setNumber(newNumber)
   }

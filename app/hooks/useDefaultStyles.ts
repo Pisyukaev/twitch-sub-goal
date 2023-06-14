@@ -29,12 +29,12 @@ export const useDefaultStyles = () => {
     },
     [LEFT_TEXT]: {
       color: elements[LEFT_TEXT].style.color,
-      "font-size": elements[LEFT_TEXT].style.fontSize || "18px",
+      "font-size": elements[LEFT_TEXT].style.fontSize || "4rem",
       "font-family": elements[LEFT_TEXT].style.fontFamily || "Inter"
     },
     [RIGHT_TEXT]: {
       color: elements[RIGHT_TEXT].style.color,
-      "font-size": elements[RIGHT_TEXT].style.fontSize || "18px",
+      "font-size": elements[RIGHT_TEXT].style.fontSize || "4rem",
       "font-family": elements[RIGHT_TEXT].style.fontFamily || "Inter"
     },
     [GW_IMAGE]: {
