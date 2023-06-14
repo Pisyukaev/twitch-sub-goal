@@ -20,6 +20,7 @@ export const fontContext = createContext<{
     }
   ) => void
   selectedFont: SelectedFonts
+  resetSelectedFont: () => void
 }>(null)
 
 const StylesProvider = stylesContext.Provider

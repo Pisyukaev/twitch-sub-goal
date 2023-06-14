@@ -55,7 +55,9 @@ export const useFonts = () => {
     }))
   }
 
-  return { fonts, setFont, selectedFont }
+  const resetSelectedFont = () => setSelectedFont(undefined)
+
+  return { fonts, setFont, selectedFont, resetSelectedFont }
 }
 
 export const useFontsContext = () => {
