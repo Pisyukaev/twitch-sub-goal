@@ -1,4 +1,4 @@
-name: "Submit to Chrome Web Store"
+name: "Submit artifacts to Web Stores"
 on:
   push:
     tags:
