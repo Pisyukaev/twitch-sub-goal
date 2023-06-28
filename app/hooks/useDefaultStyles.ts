@@ -45,7 +45,7 @@ export const useDefaultStyles = () => {
 
   const [defaultStyles] = useStorage<StylesData>(
     STORAGE_KEYS.DEFAULT_STYLES,
-    (value) => value ?? styles.current
+    () => styles.current
   )
 
   return defaultStyles
