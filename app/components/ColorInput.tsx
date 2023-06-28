@@ -1,6 +1,6 @@
 import { ColorInput as ColorPicker, Flex, Select } from "@mantine/core"
 import type { ColorInputProps } from "@mantine/core"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { COLOR_FORMATS } from "~app/constants"
 import { useStylesContext } from "~app/hooks/useStyles"
@@ -30,11 +30,18 @@ export const ColorInput = ({ selectedStyles }: Props) => {
     setLocalColor(newColor)
   }
 
+  // Update color format when we reset styles to default
+  useEffect(() => {
+    setColorFormat(getColorFormat(value))
+    setLocalColor(value)
+  }, [value])
+
   return (
     <Flex gap="md">
       <ColorPicker
         format={colorFormat}
         label={label}
+        defaultValue={localColor}
         value={localColor}
         onChange={handleChange}
         withinPortal={false}
@@ -42,6 +49,7 @@ export const ColorInput = ({ selectedStyles }: Props) => {
       <Select
         label="Color format"
         defaultValue={colorFormat}
+        value={colorFormat}
         onChange={(value: ColorFormat) => setColorFormat(value)}
         data={COLOR_FORMATS}
       />
