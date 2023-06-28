@@ -22,7 +22,8 @@ export const useDefaultStyles = () => {
       "background-color": elements[GOAL_WIDGET].style.backgroundColor,
       "border-color": elements[GOAL_WIDGET].style.borderColor,
       "border-width": elements[GOAL_WIDGET].style.borderWidth,
-      "border-radius": elements[GOAL_WIDGET].style.borderRadius || "1rem"
+      "border-radius": elements[GOAL_WIDGET].style.borderRadius || "1rem",
+      "border-style": elements[GOAL_WIDGET].style.borderStyle || "solid"
     },
     [GW_PROGRESS_BAR]: {
       "background-color": elements[GW_PROGRESS_BAR].style.backgroundColor
@@ -44,7 +45,7 @@ export const useDefaultStyles = () => {
 
   const [defaultStyles] = useStorage<StylesData>(
     STORAGE_KEYS.DEFAULT_STYLES,
-    (value) => value ?? styles.current
+    () => styles.current
   )
 
   return defaultStyles

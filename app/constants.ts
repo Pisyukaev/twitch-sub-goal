@@ -23,3 +23,14 @@ export const COLOR_FORMATS = [
   { value: "rgba", label: "RGBA" },
   { value: "hsla", label: "HSLA" }
 ]
+
+export const BORDER_STYLES = [
+  { value: "solid", label: "Solid" },
+  { value: "dashed", label: "Dashed" },
+  { value: "dotted", label: "Dotted" },
+  { value: "double", label: "Double" },
+  { value: "groove", label: "Groove" },
+  { value: "ridge", label: "Ridge" },
+  { value: "inset", label: "Inset" },
+  { value: "outset", label: "Outset" }
+]
