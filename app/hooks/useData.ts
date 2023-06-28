@@ -38,12 +38,12 @@ export const useData = () => {
         componentName: "ColorInput"
       },
       {
-        selector: GW_IMAGE,
-        label: "Image link",
-        value: styles[GW_IMAGE].content,
-        property: "content",
-        group: "image",
-        componentName: "InputImage"
+        selector: GOAL_WIDGET,
+        label: "Border style",
+        value: styles[GOAL_WIDGET]["border-style"],
+        property: "border-style",
+        group: "border",
+        componentName: "BorderStyle"
       },
       {
         selector: GOAL_WIDGET,
@@ -60,6 +60,14 @@ export const useData = () => {
         property: "border-radius",
         group: "border",
         componentName: "NumberProp"
+      },
+      {
+        selector: GW_IMAGE,
+        label: "Image link",
+        value: styles[GW_IMAGE].content,
+        property: "content",
+        group: "image",
+        componentName: "InputImage"
       },
       {
         selector: GW_PROGRESS_BAR,
