@@ -3,6 +3,7 @@ import React, { useState } from "react"
 
 import { useData } from "~app/hooks/useData"
 
+import { BorderStyle } from "./BorderStyle"
 import { ColorInput } from "./ColorInput"
 import { InputImage } from "./InputImage"
 import { NumberProp } from "./NumberProp"
@@ -21,6 +22,10 @@ const getComponent = (componentName: string) => {
 
     case "SelectFont":
       return SelectFont
+
+    case "BorderStyle":
+      return BorderStyle
+
     default:
       return null
   }
