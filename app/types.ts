@@ -7,6 +7,7 @@ export interface SelectorProps {
     | "border-color"
     | "border-width"
     | "border-radius"
+    | "border-style"
     | "content"
     | "font-size"
     | "font-family"
