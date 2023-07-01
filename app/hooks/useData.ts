@@ -1,21 +1,17 @@
 import { useMemo } from "react"
 
-import { useStorage } from "@plasmohq/storage/hook"
-
 import {
   GOAL_WIDGET,
   GW_IMAGE,
   GW_PROGRESS_BAR,
   LEFT_TEXT,
-  RIGHT_TEXT,
-  STORAGE_KEYS
+  RIGHT_TEXT
 } from "../constants"
-import type { SelectorProps, StylesData } from "../types"
+import type { SelectorProps } from "../types"
+import { useStylesContext } from "./useStyles"
 
 export const useData = () => {
-  const [styles] = useStorage<StylesData | undefined>(
-    STORAGE_KEYS.CUSTOM_STYLES
-  )
+  const { styles } = useStylesContext()
 
   const data = useMemo<SelectorProps[]>(() => {
     if (!styles) return []
