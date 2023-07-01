@@ -5,7 +5,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 import { K_REM, STORAGE_KEYS } from "~app/constants"
 import { stylesContext } from "~app/context"
 import type { StylesData } from "~app/types"
-import { deepSpread, getMeasureValue } from "~app/utils"
+import { deepMerge, getMeasureValue } from "~app/utils"
 
 import { useDebounce } from "./useDebounce"
 import { useDefaultStyles } from "./useDefaultStyles"
@@ -20,7 +20,7 @@ export const useStyles = () => {
 
   const actualSavedStyles = useMemo(() => savedStyles || {}, [savedStyles])
   const styles = useMemo(
-    () => deepSpread(defaultStyles, actualSavedStyles),
+    () => deepMerge(defaultStyles, actualSavedStyles),
     [defaultStyles, actualSavedStyles]
   )
 
