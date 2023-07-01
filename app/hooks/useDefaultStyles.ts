@@ -1,14 +1,11 @@
 import { useRef } from "react"
 
-import { useStorage } from "@plasmohq/storage/hook"
-
 import {
   GOAL_WIDGET,
   GW_IMAGE,
   GW_PROGRESS_BAR,
   LEFT_TEXT,
-  RIGHT_TEXT,
-  STORAGE_KEYS
+  RIGHT_TEXT
 } from "~app/constants"
 import type { StylesData } from "~app/types"
 
@@ -43,10 +40,5 @@ export const useDefaultStyles = () => {
     }
   })
 
-  const [defaultStyles] = useStorage<StylesData>(
-    STORAGE_KEYS.DEFAULT_STYLES,
-    () => styles.current
-  )
-
-  return defaultStyles
+  return styles.current
 }
