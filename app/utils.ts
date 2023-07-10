@@ -104,10 +104,10 @@ export const createFontFacesCSS = (fontData: FontData): string[] => {
   return fontFaces
 }
 
-export const deepMerge = (target: StylesData, source: StylesData) => {
-  const newObj: StylesData = { ...target }
+export const deepMerge = <T>(target: T, source: T) => {
+  const newObj: T = { ...target }
 
-  for (let key in source) {
+  for (const key in source) {
     if (source.hasOwnProperty(key)) {
       if (typeof source[key] === "object") {
         newObj[key] = deepMerge(newObj[key], source[key])
