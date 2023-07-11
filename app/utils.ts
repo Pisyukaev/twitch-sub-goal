@@ -1,4 +1,4 @@
-import type { FontData, FontVariant } from "~app/types"
+import type { FontData, FontVariant, StylesData } from "~app/types"
 
 export const getColorFormat = (color: string) => {
   // rgba(0, 0, 0, 0)
@@ -15,7 +15,7 @@ export const getColorFormat = (color: string) => {
 
   // #00000000
   return "hexa"
-};
+}
 
 export const getMeasureValue = (string: string) => {
   const regExp = /((?:\d*\.)?\d+)(\D+)/
@@ -102,4 +102,20 @@ export const createFontFacesCSS = (fontData: FontData): string[] => {
   )
 
   return fontFaces
+}
+
+export const deepMerge = <T>(target: T, source: T) => {
+  const newObj: T = { ...target }
+
+  for (const key in source) {
+    if (source.hasOwnProperty(key)) {
+      if (typeof source[key] === "object") {
+        newObj[key] = deepMerge(newObj[key], source[key])
+      } else {
+        newObj[key] = source[key]
+      }
+    }
+  }
+
+  return newObj
 }

@@ -1,67 +1,30 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useMemo } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { K_REM, LEFT_TEXT, RIGHT_TEXT, STORAGE_KEYS } from "~app/constants"
+import { K_REM, STORAGE_KEYS } from "~app/constants"
 import { stylesContext } from "~app/context"
 import type { StylesData } from "~app/types"
-import { getMeasureValue } from "~app/utils"
+import { deepMerge, getMeasureValue } from "~app/utils"
 
 import { useDebounce } from "./useDebounce"
 import { useDefaultStyles } from "./useDefaultStyles"
 import { useElements } from "./useElements"
 
-/**
- * @description This hook is used to initialize the styles of the elements
- * @param initialStyles - The initial styles of the elements
- * @returns The initial styles of the elements, the actual styles of the elements and a function to
- * update the actual styles of the elements
- */
-const useInitStyles = (initialStyles?: StylesData) => {
-  // By the first render, the initial styles of the elements are stored
-  useStorage<StylesData>(STORAGE_KEYS.CUSTOM_STYLES, (value) => {
-    if (!value) {
-      return initialStyles
-    }
-
-    // backward compatibility px => rem
-    // TODO: remove this in the next version
-    const newValue = {
-      ...value,
-      [LEFT_TEXT]: {
-        ...value[LEFT_TEXT],
-        "font-size": value[LEFT_TEXT]["font-size"].endsWith("px")
-          ? "4rem"
-          : value[LEFT_TEXT]["font-size"]
-      },
-      [RIGHT_TEXT]: {
-        ...value[RIGHT_TEXT],
-        "font-size": value[RIGHT_TEXT]["font-size"].endsWith("px")
-          ? "4rem"
-          : value[RIGHT_TEXT]["font-size"]
-      }
-    }
-
-    return newValue
-  })
-
-  // However, the actual state of the styles of the elements is undefined in the storage
-  const [actualStyles, setActualStyles] = useStorage<StylesData | undefined>(
-    STORAGE_KEYS.CUSTOM_STYLES
-  )
-
-  return {
-    actualStyles,
-    setActualStyles
-  }
-}
-
 export const useStyles = () => {
   const elements = useElements()
   const defaultStyles = useDefaultStyles()
-  const { actualStyles, setActualStyles } = useInitStyles(defaultStyles)
+  const [savedStyles, setSavedStyles, { remove }] = useStorage<
+    StylesData | undefined
+  >(STORAGE_KEYS.CUSTOM_STYLES)
 
-  const debouncedSetStyles = useDebounce(setActualStyles, 200)
+  const actualSavedStyles = useMemo(() => savedStyles || {}, [savedStyles])
+  const styles = useMemo(
+    () => deepMerge(defaultStyles, actualSavedStyles),
+    [defaultStyles, actualSavedStyles]
+  )
+
+  const debouncedSetStyles = useDebounce(setSavedStyles, 200)
 
   const updElementStyles = (selector: string, prop: string, value: string) => {
     let newValue = value
@@ -75,35 +38,25 @@ export const useStyles = () => {
   }
 
   const updateStyles = (selector: string, prop: string, value: string) => {
-    if (!actualStyles) {
-      return
-    }
-
     debouncedSetStyles({
-      ...actualStyles,
-      [selector]: { ...actualStyles[selector], [prop]: value }
+      ...actualSavedStyles,
+      [selector]: { ...(actualSavedStyles[selector] || {}), [prop]: value }
     })
 
     updElementStyles(selector, prop, value)
   }
 
   useEffect(() => {
-    if (!actualStyles) {
-      return
-    }
-
-    for (const selector in actualStyles) {
-      for (const prop in actualStyles[selector]) {
-        updElementStyles(selector, prop, actualStyles[selector][prop])
+    for (const selector in styles) {
+      for (const prop in styles[selector]) {
+        updElementStyles(selector, prop, styles[selector][prop])
       }
     }
-  }, [actualStyles])
-
-  const resetStyles = () => setActualStyles(defaultStyles)
+  }, [styles])
 
   return {
-    styles: actualStyles,
-    resetStyles,
+    styles,
+    resetStyles: remove,
     updateStyles
   }
 }

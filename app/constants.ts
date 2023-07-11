@@ -14,7 +14,6 @@ export const WEIGHTS = ["400"]
 
 export const STORAGE_KEYS = {
   CUSTOM_STYLES: "customStyles",
-  DEFAULT_STYLES: "defaultStyles",
   SELECTED_FONT: "selectedFont"
 }
 
