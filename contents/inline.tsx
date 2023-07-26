@@ -30,10 +30,10 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
 export const mountShadowHost: PlasmoMountShadowHost = ({
   shadowHost,
   anchor,
-  observer
+  mountState
 }) => {
   if (!anchor.element) {
-    observer.disconnect()
+    mountState.observer.disconnect()
     return
   }
 

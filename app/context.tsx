@@ -1,4 +1,5 @@
-import { PropsWithChildren, createContext } from "react"
+import { createContext } from "react"
+import type {PropsWithChildren} from 'react'
 
 import { useFonts } from "./hooks/useFonts"
 import { useStyles } from "./hooks/useStyles"
