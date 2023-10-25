@@ -38,6 +38,16 @@ export const mountShadowHost: PlasmoMountShadowHost = ({
   }
 
   const dialogContent = document.querySelector(DIALOG_CONTENT)
+  if (!dialogContent) {
+    console.error(
+      "No modal window element was found. Most likely the element class has changed." +
+        "Contact support in discord - https://discord.gg/hWR5Y37NaC or " +
+        "on github - https://github.com/Pisyukaev/twitch-sub-goal/issues."
+    )
+
+    return
+  }
+
   dialogContent.appendChild(shadowHost)
 }
 

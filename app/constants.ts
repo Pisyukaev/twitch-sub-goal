@@ -1,4 +1,4 @@
-export const DIALOG_CONTENT = ".Layout-sc-1xcs6mc-0.bJhONd"
+export const DIALOG_CONTENT = ".Layout-sc-1xcs6mc-0.hJzPJR"
 export const GOAL_WIDGET = ".goal_widget"
 export const GW_PROGRESS_BAR = ".goal_widget__progress_bar"
 export const GW_IMAGE = ".goal_widget__image.tw-image"
