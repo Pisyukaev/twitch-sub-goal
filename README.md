@@ -13,6 +13,10 @@
 
 ## How to use
 
+### Video Tutorial
+
+[![Video Tutorial](http://img.youtube.com/vi/YNLUJfWBk5I/0.jpg)](http://www.youtube.com/watch?v=YNLUJfWBk5I)
+
 1. Install this extension from [chrome store](https://chrome.google.com/webstore/detail/twitch-sub-goal/heapnplmfdahfoanhpibmpmkkhiignim)
 2. Go to [twitch dashboard](https://dashboard.twitch.tv/)
 3. Click **Manage Goals** ![Manage Goals](/.github/assets/manage_goals.png)
