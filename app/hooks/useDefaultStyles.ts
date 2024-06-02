@@ -4,10 +4,13 @@ import {
   GOAL_WIDGET,
   GW_IMAGE,
   GW_PROGRESS_BAR,
+  GW_PROGRESS_BAR_BG,
   LEFT_TEXT,
+  PROGRESS_BAR_DOT,
   RIGHT_TEXT
 } from "~app/constants"
 import type { StylesData } from "~app/types"
+import { getPropertyValue } from "~app/utils"
 
 import { useElements } from "./useElements"
 
@@ -16,27 +19,47 @@ export const useDefaultStyles = () => {
 
   const styles = useRef<StylesData>({
     [GOAL_WIDGET]: {
-      "background-color": elements[GOAL_WIDGET].style.backgroundColor,
-      "border-color": elements[GOAL_WIDGET].style.borderColor,
-      "border-width": elements[GOAL_WIDGET].style.borderWidth,
-      "border-radius": elements[GOAL_WIDGET].style.borderRadius || "1rem",
-      "border-style": elements[GOAL_WIDGET].style.borderStyle || "solid"
+      "background-color": getPropertyValue(
+        elements[GOAL_WIDGET],
+        "background-color"
+      ),
+      "border-color": getPropertyValue(elements[GOAL_WIDGET], "border-color"),
+      "border-width": getPropertyValue(elements[GOAL_WIDGET], "border-width"),
+      "border-radius":
+        getPropertyValue(elements[GOAL_WIDGET], "border-radius") || "1rem",
+      "border-style":
+        getPropertyValue(elements[GOAL_WIDGET], "border-style") || "solid"
     },
     [GW_PROGRESS_BAR]: {
-      "background-color": elements[GW_PROGRESS_BAR].style.backgroundColor
+      "background-color": getPropertyValue(
+        elements[GW_PROGRESS_BAR],
+        "background-color"
+      )
+    },
+    [GW_PROGRESS_BAR_BG]: {
+      "background-color": getPropertyValue(
+        elements[GW_PROGRESS_BAR_BG],
+        "background-color"
+      )
+    },
+    [PROGRESS_BAR_DOT]: {
+      "background-color": getPropertyValue(
+        elements[PROGRESS_BAR_DOT][0],
+        "background-color"
+      )
     },
     [LEFT_TEXT]: {
-      color: elements[LEFT_TEXT].style.color,
-      "font-size": elements[LEFT_TEXT].style.fontSize || "4rem",
-      "font-family": elements[LEFT_TEXT].style.fontFamily || "Inter"
+      color: getPropertyValue(elements[LEFT_TEXT], "color"),
+      "font-size": getPropertyValue(elements[LEFT_TEXT], "font-size") || "4rem",
+      "font-family":
+        getPropertyValue(elements[LEFT_TEXT], "font-family") || "Inter"
     },
     [RIGHT_TEXT]: {
-      color: elements[RIGHT_TEXT].style.color,
-      "font-size": elements[RIGHT_TEXT].style.fontSize || "4rem",
-      "font-family": elements[RIGHT_TEXT].style.fontFamily || "Inter"
-    },
-    [GW_IMAGE]: {
-      content: `url(${elements[GW_IMAGE].src})`
+      color: getPropertyValue(elements[RIGHT_TEXT], "color"),
+      "font-size":
+        getPropertyValue(elements[RIGHT_TEXT], "font-size") || "4rem",
+      "font-family":
+        getPropertyValue(elements[RIGHT_TEXT], "font-family") || "Inter"
     }
   })
 
