@@ -60,6 +60,9 @@ export const useDefaultStyles = () => {
         getPropertyValue(elements[RIGHT_TEXT], "font-size") || "4rem",
       "font-family":
         getPropertyValue(elements[RIGHT_TEXT], "font-family") || "Inter"
+    },
+    [GW_IMAGE]: {
+      content: getPropertyValue(elements[GW_IMAGE], "content")
     }
   })
 
