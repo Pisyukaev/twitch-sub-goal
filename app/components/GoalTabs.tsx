@@ -1,6 +1,7 @@
 import { Flex, Tabs } from "@mantine/core"
 import React, { useState } from "react"
 
+import { TAB_NAMES } from "~app/constants"
 import { useData } from "~app/hooks/useData"
 
 import { BorderStyle } from "./BorderStyle"
@@ -34,9 +35,10 @@ const getComponent = (componentName: string) => {
 export const GoalTabs = () => {
   const data = useData()
 
-  const [group, setGroup] = useState("goalWidget")
-
-  const settings = data.filter((el) => el.group === group)
+  const tabs = Object.entries(data)
+  const groups = tabs.map(([group]) => group)
+  const [group, setGroup] = useState(groups[0] || "")
+  const options = tabs.find(([tab]) => tab === group)?.[1] || []
 
   return (
     <Tabs
@@ -45,12 +47,11 @@ export const GoalTabs = () => {
       variant="outline"
       onTabChange={setGroup}>
       <Tabs.List>
-        <Tabs.Tab value="goalWidget">Goal widget</Tabs.Tab>
-        <Tabs.Tab value="border">Border</Tabs.Tab>
-        <Tabs.Tab value="image">Image</Tabs.Tab>
-        <Tabs.Tab value="progressBar">Progress bar</Tabs.Tab>
-        <Tabs.Tab value="leftText">Left text</Tabs.Tab>
-        <Tabs.Tab value="rightText">Right text</Tabs.Tab>
+        {groups.map((el) => (
+          <Tabs.Tab key={el} value={el}>
+            {TAB_NAMES[el]}
+          </Tabs.Tab>
+        ))}
       </Tabs.List>
 
       <Tabs.Panel value={group}>
@@ -61,13 +62,13 @@ export const GoalTabs = () => {
           align="stretch"
           direction="column"
           wrap="wrap">
-          {settings.map((el) => {
-            const Widget = getComponent(el.componentName)
+          {options.map((option) => {
+            const Widget = getComponent(option.componentName)
 
             return (
               <Widget
-                key={`${el.selector}-${el.property}`}
-                selectedStyles={el}
+                key={`${option.selector}-${option.property}`}
+                selectedStyles={option}
               />
             )
           })}

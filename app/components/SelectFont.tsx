@@ -4,11 +4,11 @@ import { useEffect, useState } from "react"
 import { loadFont } from "~app/api/fonts"
 import { useFontsContext } from "~app/hooks/useFonts"
 import { useStylesContext } from "~app/hooks/useStyles"
-import type { Font, SelectorProps } from "~app/types"
+import type { Font, OptionPops } from "~app/types"
 import { createFontFacesCSS } from "~app/utils"
 
 interface Props {
-  selectedStyles: SelectorProps
+  selectedStyles: OptionPops
 }
 
 export const SelectFont = ({ selectedStyles }: Props) => {

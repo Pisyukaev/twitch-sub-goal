@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 
 import { BORDER_STYLES } from "~app/constants"
 import { useStylesContext } from "~app/hooks/useStyles"
-import type { SelectorProps } from "~app/types"
+import type { OptionPops } from "~app/types"
 
 interface Props {
-  selectedStyles: SelectorProps
+  selectedStyles: OptionPops
 }
 
 export const BorderStyle = ({

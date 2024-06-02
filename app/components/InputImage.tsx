@@ -2,10 +2,10 @@ import { Input } from "@mantine/core"
 import { type ChangeEvent, useMemo } from "react"
 
 import { useStylesContext } from "~app/hooks/useStyles"
-import type { SelectorProps } from "~app/types"
+import type { OptionPops } from "~app/types"
 
 interface Props {
-  selectedStyles: SelectorProps
+  selectedStyles: OptionPops
 }
 
 export const InputImage = ({ selectedStyles }: Props) => {
