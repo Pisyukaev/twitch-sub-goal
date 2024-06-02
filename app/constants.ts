@@ -40,3 +40,12 @@ export const BORDER_STYLES = [
   { value: "inset", label: "Inset" },
   { value: "outset", label: "Outset" }
 ]
+
+export const TAB_NAMES = {
+  goalWidget: "Goal Widget",
+  border: "Border",
+  image: "Image",
+  progressBar: "Progress Bar",
+  leftText: "Left text",
+  rightText: "Right text"
+}
