@@ -4,7 +4,9 @@ import {
   GOAL_WIDGET,
   GW_IMAGE,
   GW_PROGRESS_BAR,
+  GW_PROGRESS_BAR_BG,
   LEFT_TEXT,
+  PROGRESS_BAR_DOT,
   RIGHT_TEXT
 } from "../constants"
 import type { SelectorProps } from "../types"
@@ -69,6 +71,22 @@ export const useData = () => {
         selector: GW_PROGRESS_BAR,
         label: "Progress bar",
         value: styles[GW_PROGRESS_BAR]["background-color"],
+        property: "background-color",
+        group: "progressBar",
+        componentName: "ColorInput"
+      },
+      {
+        selector: GW_PROGRESS_BAR_BG,
+        label: "Progress bar background",
+        value: styles[GW_PROGRESS_BAR_BG]["background-color"],
+        property: "background-color",
+        group: "progressBar",
+        componentName: "ColorInput"
+      },
+      {
+        selector: PROGRESS_BAR_DOT,
+        label: "Progress bar dot",
+        value: styles[PROGRESS_BAR_DOT]["background-color"],
         property: "background-color",
         group: "progressBar",
         componentName: "ColorInput"
