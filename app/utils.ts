@@ -119,3 +119,9 @@ export const deepMerge = <T>(target: T, source: T) => {
 
   return newObj
 }
+
+export const getPropertyValue = (element: HTMLElement, property: string) => {
+  const value = window.getComputedStyle(element).getPropertyValue(property)
+
+  return value
+}
