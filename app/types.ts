@@ -1,4 +1,4 @@
-export interface SelectorProps {
+export interface OptionPops {
   label: string
   value: string
   property:
@@ -12,8 +12,11 @@ export interface SelectorProps {
     | "font-size"
     | "font-family"
   selector: string
-  group?: string
   componentName: string
+}
+
+export interface DataProps {
+  [key: string]: OptionPops[]
 }
 
 export interface StylesData {

@@ -1,11 +1,11 @@
 import { NumberInput } from "@mantine/core"
 
 import { useStylesContext } from "~app/hooks/useStyles"
-import type { SelectorProps } from "~app/types"
+import type { OptionPops } from "~app/types"
 import { getMeasureValue } from "~app/utils"
 
 interface Props {
-  selectedStyles: SelectorProps
+  selectedStyles: OptionPops
 }
 
 export const NumberProp = ({

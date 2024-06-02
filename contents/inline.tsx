@@ -6,7 +6,7 @@ import type {
 } from "plasmo"
 
 import { App } from "~app/components/App"
-import { DIALOG_CONTENT, WIDGET_LINK } from "~app/constants"
+import { DIALOG_CONTENT, GOAL_WIDGET } from "~app/constants"
 import { ThemeProvider } from "~theme"
 
 export const config: PlasmoCSConfig = {
@@ -25,7 +25,7 @@ const styleCache = createEmotionCache({
 export const getStyle = () => styleElement
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
-  document.querySelector(WIDGET_LINK)
+  document.querySelector(GOAL_WIDGET)
 
 export const mountShadowHost: PlasmoMountShadowHost = ({
   shadowHost,

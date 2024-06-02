@@ -34,7 +34,13 @@ export const useStyles = () => {
       newValue = `${numberValue / K_REM}${measureValue}`
     }
 
-    elements[selector].style[prop] = newValue
+    if (Array.isArray(elements[selector])) {
+      elements[selector].forEach((element) => {
+        element.style[prop] = newValue
+      })
+    } else {
+      elements[selector].style[prop] = newValue
+    }
   }
 
   const updateStyles = (selector: string, prop: string, value: string) => {

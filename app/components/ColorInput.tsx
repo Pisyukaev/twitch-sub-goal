@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react"
 
 import { COLOR_FORMATS } from "~app/constants"
 import { useStylesContext } from "~app/hooks/useStyles"
-import type { SelectorProps } from "~app/types"
+import type { OptionPops } from "~app/types"
 import { getColorFormat } from "~app/utils"
 
 type ColorFormat = ColorInputProps["format"]
 
 interface Props {
-  selectedStyles: SelectorProps
+  selectedStyles: OptionPops
 }
 
 export const ColorInput = ({ selectedStyles }: Props) => {

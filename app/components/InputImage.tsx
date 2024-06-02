@@ -1,23 +1,28 @@
 import { Input } from "@mantine/core"
-import type { ChangeEvent } from "react"
+import { type ChangeEvent, useMemo } from "react"
 
 import { useStylesContext } from "~app/hooks/useStyles"
-import type { SelectorProps } from "~app/types"
+import type { OptionPops } from "~app/types"
 
 interface Props {
-  selectedStyles: SelectorProps
+  selectedStyles: OptionPops
 }
 
 export const InputImage = ({ selectedStyles }: Props) => {
   const { updateStyles } = useStylesContext()
   const { value, selector, property } = selectedStyles
+  const actualValue = useMemo(() => (value === "normal" ? "" : value), [value])
 
   const handleChange = ({
     target: { value: imgSrc }
   }: ChangeEvent<HTMLInputElement>) =>
-    updateStyles(selector, property, `url(${imgSrc})`)
+    updateStyles(
+      selector,
+      property,
+      imgSrc !== "" ? `url(${imgSrc})` : "normal"
+    )
 
-  const src = value.replaceAll(/url\(|\)/g, "")
+  const src = actualValue.replaceAll(/url\(|\)/g, "")
 
   return (
     <Input.Wrapper label="Image link">
